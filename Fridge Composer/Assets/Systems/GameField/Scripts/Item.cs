@@ -1,11 +1,33 @@
-﻿public class Item
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+public class Item
 {
-    public Attribute Attribute { get => _attribute;  }
+    public Vector2Int Sizes => new Vector2Int(_description.RowNum, _description.ColNum);
 
-    private Attribute _attribute;
-
-    public override string ToString()
+    private ItemDesciption _description;
+    
+    public Item(ItemDesciption description)
     {
-        return _attribute.ToString();
+        _description = description;
     }
+
+    public bool CheckForbidenAttributes(SurfaceDescription surfaceDescription)
+    {
+        bool foundForbiden = false;
+        foreach (var surfaceAttribute in surfaceDescription.Attributes)
+        {
+            foreach (var itemAttribute in _description.Attributes)
+            {
+                if (surfaceAttribute.Contains(itemAttribute))
+                {
+                    foundForbiden = true;
+                    break;
+                }
+
+            }
+        }
+        return foundForbiden;
+    }
+
 }

@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Cell
 {
-    private int _row;
-    private int _col;
+    private SurfaceDescription _surfaceDescrption;
+
     private Item _content;
+
+    public Cell(SurfaceDescription description)
+    {
+        _surfaceDescrption = description;
+    }
 
     public void PlaceContent(Item cellContent)
     {
@@ -23,8 +28,8 @@ public class Cell
         _content = null;
     }
 
-    private bool CanPlaceHere(Item content)
+    public bool CanPlaceHere(Item content)
     {
-        return true;
+        return !content.CheckForbidenAttributes(_surfaceDescrption);
     }
 }

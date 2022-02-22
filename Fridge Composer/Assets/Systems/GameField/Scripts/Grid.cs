@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class Grid
 
     private Cell[,] _cells;
 
-    public Grid(int rows, int cols, int cellWidth, Vector3 offset)
+    public Grid(int rows, int cols, int cellWidth, Vector3 offset, SurfaceDescription cellAttributes)
     {
         _offset = offset;
         _cellWidth = cellWidth;
@@ -23,20 +24,34 @@ public class Grid
         {
             for (int col = 0; col < _colsNumber; col++)
             {
-                _cells[row, col] = new Cell();
+                _cells[row, col] = new Cell(cellAttributes);
             }
         }
     }
 
-    public bool CanPlaceContent(Vector3 worldCoords, Item content)
+    public bool CanPlaceContent(Vector3 worldCoords, Item item)
     {
-        return true;
+        Vector2Int startCoordinate = WorldToGrid(worldCoords);
+        List<Vector2Int> cellIndices = GetOcupiedGridCoordinates(startCoordinate, item);
+
+        bool canPlaceHere = true;
+        foreach (Vector2Int cellIndex in cellIndices)
+        {
+            canPlaceHere &= _cells[cellIndex.x, cellIndex.y].CanPlaceHere(item);
+        }
+        return canPlaceHere;
     }
 
-    public void PlaceContent(Vector3 worldCoords, Item content)
+
+    public void PlaceContent(Vector3 worldCoords, Item item)
     {
-        var indexes = WorldToGrid(worldCoords);
-        _cells[indexes.x, indexes.y].PlaceContent(content);
+        Vector2Int startCoordinate = WorldToGrid(worldCoords);
+        List<Vector2Int> ocupiedCoordinates = GetOcupiedGridCoordinates(startCoordinate, item);
+
+        foreach (var coordinate in ocupiedCoordinates)
+        {
+            _cells[coordinate.x, coordinate.y].PlaceContent(item);
+        }
     }
 
     public Item GetContentWithIndex(Vector2Int gridIdx)
@@ -90,6 +105,18 @@ public class Grid
         return new Vector2Int(row, col);
     }
 
-
+    private List<Vector2Int> GetOcupiedGridCoordinates(Vector2Int startCoordinate, Item item)
+    {
+        List<Vector2Int> ocupiedCoortinates = new List<Vector2Int>();
+        for (int row = 0; row < item.Sizes.x; row++)
+        {
+            for (int col = 0; col < item.Sizes.y; col++)
+            {
+                Vector2Int itemCoord = new Vector2Int(startCoordinate.x + row, startCoordinate.y + col);
+                ocupiedCoortinates.Add(itemCoord);
+            }
+        }
+        return ocupiedCoortinates;
+    }
 
 }

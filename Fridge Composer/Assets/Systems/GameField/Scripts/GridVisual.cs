@@ -6,18 +6,23 @@ using UnityEngine;
 
 public class GridVisual : MonoBehaviour
 {
+    [SerializeField] private PlaceableItem _placeable;
+    [SerializeField] private GridDescription _gridDescription;
+
+    private int _rows;
+    private int _cols;
+    private int _width;
     private Grid _grid;
-
-    [SerializeField] private int _rows = 4;
-    [SerializeField] private int _cols = 3;
-    [SerializeField] private int _width = 1;
-
     private Camera _camera;
     private BoxCollider _collider;
 
     void Awake()
     {
-        _grid = new Grid(_rows, _cols, _width, offset: transform.position);
+        _rows = _gridDescription.Rows;
+        _cols = _gridDescription.Cols;
+        _width = _gridDescription.Width;
+
+        _grid = new Grid(_rows, _cols, _width, offset: transform.position, _gridDescription.Description);
         _camera = Camera.main;
         _collider = GetComponent<BoxCollider>();
     }
@@ -39,9 +44,9 @@ public class GridVisual : MonoBehaviour
         {
             HandeleClick((Vector3 worldCoordinates) =>
             {
-                if (_grid.CanPlaceContent(worldCoordinates, new Item()))
+                if (_grid.CanPlaceContent(worldCoordinates, _placeable.Item))
                 {
-                    _grid.PlaceContent(worldCoordinates, new Item());
+                    _grid.PlaceContent(worldCoordinates, _placeable.Item);
                     DrawGridDebug();
                 }
             });
