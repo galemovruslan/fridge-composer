@@ -6,7 +6,6 @@ public class Item
     public Vector2Int Sizes => new Vector2Int(_description.RowNum, _description.ColNum);
     public GameObject Visuals => _description.Visuals;
 
-
     private ItemDesciption _description;
     
     public Item(ItemDesciption description)

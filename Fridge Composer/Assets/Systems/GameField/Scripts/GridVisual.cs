@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class GridVisual : MonoBehaviour
 {
-    [SerializeField] private PlaceableItem _placeable;
     [SerializeField] private GridDescription _gridDescription;
 
     private int _rows;
     private int _cols;
     private int _width;
     private Grid _grid;
-    private Camera _camera;
     private BoxCollider _collider;
     private Dictionary<Item, List<Vector2Int>> _gridIndicesMap = new Dictionary<Item, List<Vector2Int>>();
     private Dictionary<Item, GameObject> _gameObjectMap = new Dictionary<Item, GameObject>();
@@ -25,7 +23,6 @@ public class GridVisual : MonoBehaviour
         _width = _gridDescription.Width;
 
         _grid = new Grid(_rows, _cols, _width, offset: transform.position, _gridDescription.Description);
-        _camera = Camera.main;
         _collider = GetComponent<BoxCollider>();
     }
 
@@ -35,30 +32,7 @@ public class GridVisual : MonoBehaviour
         DrawGridDebug();
     }
 
-    private void Update()
-    {
-        ClickOnGridHandler();
-    }
-
-    private void ClickOnGridHandler()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            HandeleClick((Vector3 worldCoordinates) =>
-            {
-                PlaceOnGrid(worldCoordinates);
-            });
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            HandeleClick((Vector3 worldCoordinates) =>
-            {
-                RemoveFromGrid(worldCoordinates);
-            });
-        }
-    }
-
-    private void RemoveFromGrid(Vector3 worldCoordinates)
+    public void RemoveFromGrid(Vector3 worldCoordinates)
     {
         Item itemOnCoordinates = _grid.GetContentWithCoords(worldCoordinates);
 
@@ -74,13 +48,13 @@ public class GridVisual : MonoBehaviour
         DrawGridDebug();
     }
 
-    private void PlaceOnGrid(Vector3 worldCoordinates)
+    public void PlaceOnGrid(Vector3 worldCoordinates, Item item)
     {
-        if (_grid.CanPlaceContent(worldCoordinates, _placeable.Item))
+        if (_grid.CanPlaceContent(worldCoordinates, item))
         {
-            List<Vector2Int> ocupiedGridIndices = _grid.PlaceContent(worldCoordinates, _placeable.Item);
-            _gridIndicesMap.Add(_placeable.Item, ocupiedGridIndices);
-            SpawnObjectOnGrid(_placeable.Item, ocupiedGridIndices);
+            List<Vector2Int> ocupiedGridIndices = _grid.PlaceContent(worldCoordinates, item);
+            _gridIndicesMap.Add(item, ocupiedGridIndices);
+            SpawnObjectOnGrid(item, ocupiedGridIndices);
             DrawGridDebug();
         }
     }
@@ -152,21 +126,6 @@ public class GridVisual : MonoBehaviour
         float gridCenterZ = zStart + zSize / 2;
         _collider.center = new Vector3(gridCenterX, transform.position.y, gridCenterZ);
         _collider.size = new Vector3(xSize, _collider.size.y, zSize);
-    }
-
-    private void HandeleClick(Action<Vector3> OnGridClickAction)
-    {
-        Ray screenRay = _camera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(screenRay, out var hit))
-        {
-            Vector3 worldCoordinates = hit.point;
-            if (!_grid.CheckOnGrid(worldCoordinates))
-            {
-                Debug.Log("Pointer in not on grid");
-                return;
-            }
-            OnGridClickAction.Invoke(worldCoordinates);
-        }
     }
 
 }
