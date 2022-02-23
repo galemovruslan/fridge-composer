@@ -34,10 +34,16 @@ public class Grid
         Vector2Int startCoordinate = WorldToGrid(worldCoords);
         List<Vector2Int> cellIndices = GetOcupiedGridCoordinates(startCoordinate, item);
 
+        if(cellIndices.Count == 0) 
+        { 
+            return false; 
+        }
+
         bool canPlaceHere = true;
         foreach (Vector2Int cellIndex in cellIndices)
         {
-            canPlaceHere &= _cells[cellIndex.x, cellIndex.y].CanPlaceHere(item);
+            bool canPlaceThisCell = _cells[cellIndex.x, cellIndex.y].CanPlaceHere(item);
+            canPlaceHere &= canPlaceThisCell;
         }
         return canPlaceHere;
     }
@@ -108,6 +114,13 @@ public class Grid
     private List<Vector2Int> GetOcupiedGridCoordinates(Vector2Int startCoordinate, Item item)
     {
         List<Vector2Int> ocupiedCoortinates = new List<Vector2Int>();
+
+        if (startCoordinate.x + item.Sizes.x > _cells.GetLength(0) ||
+            startCoordinate.y + item.Sizes.y > _cells.GetLength(1))
+        {
+            return ocupiedCoortinates;
+        }
+
         for (int row = 0; row < item.Sizes.x; row++)
         {
             for (int col = 0; col < item.Sizes.y; col++)

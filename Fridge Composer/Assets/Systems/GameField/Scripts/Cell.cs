@@ -30,6 +30,6 @@ public class Cell
 
     public bool CanPlaceHere(Item content)
     {
-        return !content.CheckForbidenAttributes(_surfaceDescrption);
+        return _content == null && !content.CheckForbidenAttributes(_surfaceDescrption);
     }
 }
