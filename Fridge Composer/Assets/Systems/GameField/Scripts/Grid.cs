@@ -32,7 +32,7 @@ public class Grid
     public bool CanPlaceContent(Vector3 worldCoords, Item item)
     {
         Vector2Int startCoordinate = WorldToGrid(worldCoords);
-        List<Vector2Int> cellIndices = GetOcupiedGridCoordinates(startCoordinate, item);
+        List<Vector2Int> cellIndices = GetOcupiedGridIndices(startCoordinate, item);
 
         if(cellIndices.Count == 0) 
         { 
@@ -49,15 +49,16 @@ public class Grid
     }
 
 
-    public void PlaceContent(Vector3 worldCoords, Item item)
+    public List<Vector2Int> PlaceContent(Vector3 worldCoords, Item item)
     {
         Vector2Int startCoordinate = WorldToGrid(worldCoords);
-        List<Vector2Int> ocupiedCoordinates = GetOcupiedGridCoordinates(startCoordinate, item);
+        List<Vector2Int> ocupiedCoordinates = GetOcupiedGridIndices(startCoordinate, item);
 
         foreach (var coordinate in ocupiedCoordinates)
         {
             _cells[coordinate.x, coordinate.y].PlaceContent(item);
         }
+        return ocupiedCoordinates;
     }
 
     public Item GetContentWithIndex(Vector2Int gridIdx)
@@ -93,13 +94,13 @@ public class Grid
 
     }
 
-    public void ClearContent(Vector3 coords)
+    public void ClearContentWithCoordinates(Vector3 coords)
     {
         var indexes = WorldToGrid(coords);
-        ClearCell(indexes.x, indexes.y);
+        ClearContentWithIndex(indexes.x, indexes.y);
     }
 
-    private void ClearCell(int row, int col)
+    public void ClearContentWithIndex(int row, int col)
     {
         _cells[row, col].RemoveContent();
     }
@@ -111,7 +112,7 @@ public class Grid
         return new Vector2Int(row, col);
     }
 
-    private List<Vector2Int> GetOcupiedGridCoordinates(Vector2Int startCoordinate, Item item)
+    private List<Vector2Int> GetOcupiedGridIndices(Vector2Int startCoordinate, Item item)
     {
         List<Vector2Int> ocupiedCoortinates = new List<Vector2Int>();
 

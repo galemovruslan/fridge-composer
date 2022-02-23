@@ -7,7 +7,8 @@ public class ItemDesciption : ScriptableObject
 {
     public List<ItemAttribute> Attributes => _attributes;
     public int RowNum => _rowNum; 
-    public int ColNum => _colNum; 
+    public int ColNum => _colNum;
+    public GameObject Visuals => _visuals; 
 
 
     [SerializeField] private List<ItemAttribute> _attributes;
@@ -17,4 +18,6 @@ public class ItemDesciption : ScriptableObject
     
     [Min(1)]
     [SerializeField] private int _colNum = 1;
+
+    [SerializeField] private GameObject _visuals;
 }
