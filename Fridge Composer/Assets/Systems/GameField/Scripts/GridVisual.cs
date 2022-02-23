@@ -13,7 +13,6 @@ public class GridVisual : MonoBehaviour
     private int _width;
     private Grid _grid;
     private BoxCollider _collider;
-    private Dictionary<Item, List<Vector2Int>> _gridIndicesMap = new Dictionary<Item, List<Vector2Int>>();
     private Dictionary<Item, GameObject> _gameObjectMap = new Dictionary<Item, GameObject>();
 
     void Awake()
@@ -37,14 +36,8 @@ public class GridVisual : MonoBehaviour
         Item itemOnCoordinates = _grid.GetContentWithCoords(worldCoordinates);
 
         if (itemOnCoordinates == null) { return; }
-
+        _grid.ClearContentWithItem(itemOnCoordinates);
         DestroyObjectOnGrid(itemOnCoordinates);
-        List<Vector2Int> ocupiedGridIndices = _gridIndicesMap[itemOnCoordinates];
-        foreach (var itemIndices in ocupiedGridIndices)
-        {
-            _grid.ClearContentWithIndex(itemIndices.x, itemIndices.y);
-        }
-        _gridIndicesMap.Remove(itemOnCoordinates);
         DrawGridDebug();
     }
 
@@ -52,16 +45,16 @@ public class GridVisual : MonoBehaviour
     {
         if (_grid.CanPlaceContent(worldCoordinates, item))
         {
-            List<Vector2Int> ocupiedGridIndices = _grid.PlaceContent(worldCoordinates, item);
-            _gridIndicesMap.Add(item, ocupiedGridIndices);
-            SpawnObjectOnGrid(item, ocupiedGridIndices);
+            _grid.PlaceContent(worldCoordinates, item);
+            SpawnObjectOnGrid(item);
             DrawGridDebug();
         }
     }
 
-    private void SpawnObjectOnGrid(Item item, List<Vector2Int> coordinates)
+    private void SpawnObjectOnGrid(Item item)
     {
-        Vector3 worldCoords = _grid.GridToWorld(coordinates[0]);
+        Vector2Int itemIndex = _grid.GetItemOrigin(item);
+        Vector3 worldCoords = _grid.GridToWorld(itemIndex);
         GameObject itemGameObject = Instantiate(item.Visuals, worldCoords, Quaternion.identity);
         _gameObjectMap.Add(item, itemGameObject);
     }

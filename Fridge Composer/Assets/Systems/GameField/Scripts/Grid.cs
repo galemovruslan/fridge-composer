@@ -9,8 +9,9 @@ public class Grid
     private int _colsNumber;
     private float _cellWidth;
     private Vector3 _offset;
-
     private Cell[,] _cells;
+    private Dictionary<Item, List<Vector2Int>> _gridIndicesMap;
+
 
     public Grid(int rows, int cols, int cellWidth, Vector3 offset, SurfaceDescription cellAttributes)
     {
@@ -19,6 +20,7 @@ public class Grid
         _rowsNumber = rows;
         _colsNumber = cols;
         _cells = new Cell[_rowsNumber, _colsNumber];
+        _gridIndicesMap = new Dictionary<Item, List<Vector2Int>>();
 
         for (int row = 0; row < _rowsNumber; row++)
         {
@@ -49,16 +51,21 @@ public class Grid
     }
 
 
-    public List<Vector2Int> PlaceContent(Vector3 worldCoords, Item item)
+    public void PlaceContent(Vector3 worldCoords, Item item)
     {
         Vector2Int startCoordinate = WorldToGrid(worldCoords);
-        List<Vector2Int> ocupiedCoordinates = GetOcupiedGridIndices(startCoordinate, item);
+        List<Vector2Int> ocupiedIndices = GetOcupiedGridIndices(startCoordinate, item);
 
-        foreach (var coordinate in ocupiedCoordinates)
+        foreach (var coordinate in ocupiedIndices)
         {
             _cells[coordinate.x, coordinate.y].PlaceContent(item);
         }
-        return ocupiedCoordinates;
+        _gridIndicesMap.Add(item, ocupiedIndices);
+    }
+
+    public Vector2Int GetItemOrigin(Item item)
+    {
+        return _gridIndicesMap[item][0];
     }
 
     public Item GetContentWithIndex(Vector2Int gridIdx)
@@ -103,6 +110,17 @@ public class Grid
     public void ClearContentWithIndex(int row, int col)
     {
         _cells[row, col].RemoveContent();
+    }
+
+    public void ClearContentWithItem(Item item)
+    {
+        List<Vector2Int> ocupiedGridIndices = _gridIndicesMap[item];
+        foreach (var itemIndices in ocupiedGridIndices)
+        {
+            ClearContentWithIndex(itemIndices.x, itemIndices.y);
+        }
+        _gridIndicesMap.Remove(item);
+
     }
 
     private Vector2Int WorldToGrid(Vector3 coords)
