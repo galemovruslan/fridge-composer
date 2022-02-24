@@ -123,6 +123,13 @@ public class Grid
 
     }
 
+    public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
+    {
+        Vector2Int itemIndex = WorldToGrid(freeWorldCoordinates);
+        Vector3 worldCoords = GridToWorld(itemIndex);
+        return worldCoords;
+    }
+
     private Vector2Int WorldToGrid(Vector3 coords)
     {
         int row = Mathf.FloorToInt((coords.x - _offset.x) / _cellWidth);

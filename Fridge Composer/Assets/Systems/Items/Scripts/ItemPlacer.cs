@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItemPlacer : MonoBehaviour
 {
 
-    [SerializeField] private ItemDesciption _currentItem;
+    [SerializeField] private PlaceableItem _currentItem;
 
     private Camera _camera;
 
@@ -17,12 +17,37 @@ public class ItemPlacer : MonoBehaviour
 
     private void Update()
     {
-        HandeleClick();
+        InputHandle();
+        MoveItem();
     }
 
-    private void HandeleClick()
+    private void InputHandle()
     {
-        InputHandle();
+        if (Input.GetMouseButtonDown(0))
+        {
+            var itemToPlace = _currentItem.Item;
+            InteractWithGrid((grid, worldCoordinates) =>
+            {
+                if (grid.TryPlaceOnGrid(worldCoordinates, itemToPlace, _currentItem.gameObject))
+                {
+                    _currentItem.IsPlaced(true);
+                }
+            });
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            InteractWithGrid((grid, worldCoordinates) => grid.RemoveFromGrid(worldCoordinates));
+
+        }
+    }
+
+    private void MoveItem()
+    {
+        InteractWithGrid((grid, worldCoordinates) =>
+       {
+           Vector3 snapedCoordinates = grid.SnapToGrid(worldCoordinates);
+           _currentItem.transform.position = snapedCoordinates;
+       });
     }
 
     private void InteractWithGrid(Action<GridVisual, Vector3> interaction)
@@ -36,18 +61,6 @@ public class ItemPlacer : MonoBehaviour
             interaction.Invoke(grid, worldCoordinates);
         }
     }
-
-    private void InputHandle()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var itemToPlace = new Item(_currentItem);
-            InteractWithGrid((grid, worldCoordinates) => grid.PlaceOnGrid(worldCoordinates, itemToPlace));
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            InteractWithGrid((grid, worldCoordinates) => grid.RemoveFromGrid(worldCoordinates));
-
-        }
-    }
 }
+
+

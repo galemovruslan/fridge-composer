@@ -41,22 +41,30 @@ public class GridVisual : MonoBehaviour
         DrawGridDebug();
     }
 
-    public void PlaceOnGrid(Vector3 worldCoordinates, Item item)
+    public bool TryPlaceOnGrid(Vector3 worldCoordinates, Item item, GameObject placedObject)
     {
         if (_grid.CanPlaceContent(worldCoordinates, item))
         {
-            _grid.PlaceContent(worldCoordinates, item);
-            SpawnObjectOnGrid(item);
-            DrawGridDebug();
+            return false;
         }
+
+        _grid.PlaceContent(worldCoordinates, item);
+        SpawnObjectOnGrid(item, placedObject);
+        DrawGridDebug();
+        return true;
     }
 
-    private void SpawnObjectOnGrid(Item item)
+    public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
     {
-        Vector2Int itemIndex = _grid.GetItemOrigin(item);
-        Vector3 worldCoords = _grid.GridToWorld(itemIndex);
-        GameObject itemGameObject = Instantiate(item.Visuals, worldCoords, Quaternion.identity);
-        _gameObjectMap.Add(item, itemGameObject);
+        return _grid.SnapToGrid(freeWorldCoordinates);
+    }
+
+    private void SpawnObjectOnGrid(Item item, GameObject spawnedGameObject)
+    {
+        //Vector2Int itemIndex = _grid.GetItemOrigin(item);
+        //Vector3 worldCoords = _grid.GridToWorld(itemIndex);
+        //GameObject itemGameObject = Instantiate(item.Visuals, worldCoords, Quaternion.identity);
+        _gameObjectMap.Add(item, spawnedGameObject);
     }
 
     private void DestroyObjectOnGrid(Item item)
