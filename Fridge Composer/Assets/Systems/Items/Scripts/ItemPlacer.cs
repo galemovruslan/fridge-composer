@@ -8,7 +8,6 @@ public class ItemPlacer : MonoBehaviour
 
     [SerializeField] private PlaceableItem _currentItemPrefab;
 
-    private List<PlaceableItem> _spawnedItems = new List<PlaceableItem>();
     private PlaceableItem _currentItem;
     private Camera _camera;
 
@@ -29,34 +28,39 @@ public class ItemPlacer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if(_currentItem == null) { return; }
-
-            Item itemToPlace = _currentItem.Item;
-
-            InteractWithGrid((grid, worldCoordinates) =>
-            {
-                if (!grid.TryPlaceOnGrid(worldCoordinates, itemToPlace, _currentItem)) { return; }
-
-                _currentItem.SetPlaced(true);
-                _spawnedItems.Add(_currentItem);
-
-                //_currentItem = Instantiate(_currentItemPrefab);
-                _currentItem = null;
-            });
+            PlaceItem();
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            InteractWithGrid((grid, worldCoordinates) =>
-            {
-                PlaceableItem removedItem = grid.RemoveFromGrid(worldCoordinates);
-
-                if (removedItem == null) { return; }
-
-                //Destroy(_currentItem.gameObject);
-                _currentItem = removedItem;
-            });
-
+            PickItem();
         }
+    }
+
+    private void PickItem()
+    {
+        InteractWithGrid((grid, worldCoordinates) =>
+        {
+            PlaceableItem removedItem = grid.RemoveFromGrid(worldCoordinates);
+
+            if (removedItem == null) { return; }
+
+            _currentItem = removedItem;
+        });
+    }
+
+    private void PlaceItem()
+    {
+        if (_currentItem == null) { return; }
+
+        Item itemToPlace = _currentItem.Item;
+
+        InteractWithGrid((grid, worldCoordinates) =>
+        {
+            if (!grid.TryPlaceOnGrid(worldCoordinates, itemToPlace, _currentItem)) { return; }
+
+            _currentItem.SetPlaced(true);
+            _currentItem = null;
+        });
     }
 
     private void MoveItem()
@@ -81,6 +85,7 @@ public class ItemPlacer : MonoBehaviour
             interaction.Invoke(grid, worldCoordinates);
         }
     }
+
 }
 
 

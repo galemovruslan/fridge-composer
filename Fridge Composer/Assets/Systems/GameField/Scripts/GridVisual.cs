@@ -101,7 +101,7 @@ public class GridVisual : MonoBehaviour
                 Debug.DrawLine(startPoint, endPointVertical, Color.white, 999);
 
                 Vector3 textOffset = new Vector3(_width / 2.0f, 0f, _width / 2.0f);
-                Vector3 textPosition = startPoint + textOffset;
+                Vector3 textPosition = transform.InverseTransformPoint( startPoint) + textOffset;
 
                 var item = _grid.GetContentWithIndex(new Vector2Int(row, col));
                 string cellText = item == null ? "null" : "1";
@@ -121,13 +121,11 @@ public class GridVisual : MonoBehaviour
 
     private void FitCollider(int rows, int cols, int cellWidth, Vector3 offset)
     {
-        float xStart = offset.x;
-        float zStart = offset.z;
         float xSize = cellWidth * rows;
         float zSize = cellWidth * cols;
 
-        float gridCenterX = xStart + xSize / 2;
-        float gridCenterZ = zStart + zSize / 2;
+        float gridCenterX = xSize / 2;
+        float gridCenterZ = zSize / 2;
         _collider.center = new Vector3(gridCenterX, transform.position.y, gridCenterZ);
         _collider.size = new Vector3(xSize, _collider.size.y, zSize);
     }
