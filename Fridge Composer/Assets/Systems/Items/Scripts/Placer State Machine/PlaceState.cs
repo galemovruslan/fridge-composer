@@ -21,7 +21,7 @@ public class PlaceState : PlacerState
             if (!grid.TryPlaceOnGrid(worldCoordinates, itemToPlace, _currentItem)) { return; }
 
             _currentItem = null;
-
+            ChangeState();
         });
     }
 

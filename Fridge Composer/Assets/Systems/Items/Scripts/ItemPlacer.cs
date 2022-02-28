@@ -8,6 +8,8 @@ public class ItemPlacer : MonoBehaviour
 
     [SerializeField] private PlaceableItem _currentItemPrefab;
 
+    private PlacerStateMachine _stateMachine;
+
     private PlaceableItem _currentItem;
     private Camera _camera;
 
@@ -16,26 +18,33 @@ public class ItemPlacer : MonoBehaviour
     {
         _camera = Camera.main;
         _currentItem = Instantiate(_currentItemPrefab);
+
+        _stateMachine = new PlacerStateMachine();
+        var startState = new PlaceState(_stateMachine, _currentItem);
+        _stateMachine.ChangeState(startState);
     }
 
     private void Update()
     {
+        
         InputHandle();
-        MoveItem();
+        _stateMachine.Update();
+        //MoveItem();
     }
-
+    
     private void InputHandle()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            PlaceItem();
+            _stateMachine.Tick();
+            //PlaceItem();
         }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            PickItem();
-        }
+        //else if (Input.GetMouseButtonDown(1))
+        //{
+        //    PickItem();
+        //}
     }
-
+    /*
     private void PickItem()
     {
         InteractWithGrid((grid, worldCoordinates) =>
@@ -85,7 +94,7 @@ public class ItemPlacer : MonoBehaviour
             interaction.Invoke(grid, worldCoordinates);
         }
     }
-
+    */
 }
 
 

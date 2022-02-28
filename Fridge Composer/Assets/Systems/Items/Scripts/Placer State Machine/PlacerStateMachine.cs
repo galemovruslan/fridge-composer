@@ -6,9 +6,15 @@ public class PlacerStateMachine
 {
     private PlacerState _currentState;
 
+
     public void ChangeState(PlacerState newState)
     {
         _currentState = newState;
+    }
+
+    public void Update()
+    {
+        _currentState.MoveItem();
     }
 
     public void Tick()
