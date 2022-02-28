@@ -9,14 +9,14 @@ public class PlaceableItem : MonoBehaviour
     [SerializeField] private ItemDesciption _description;
 
     private Item _item;
-    private bool _placed = true;
+    private bool _placed = false;
 
     private void Awake()
     {
         _item = new Item(_description);
     }
 
-    public void IsPlaced(bool value)
+    public void SetPlaced(bool value)
     {
         _placed = value;
     }

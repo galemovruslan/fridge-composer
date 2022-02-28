@@ -13,7 +13,7 @@ public class GridVisual : MonoBehaviour
     private int _width;
     private Grid _grid;
     private BoxCollider _collider;
-    private Dictionary<Item, GameObject> _gameObjectMap = new Dictionary<Item, GameObject>();
+    private Dictionary<Item, PlaceableItem> _gameObjectMap = new Dictionary<Item, PlaceableItem>();
 
     void Awake()
     {
@@ -31,25 +31,30 @@ public class GridVisual : MonoBehaviour
         DrawGridDebug();
     }
 
-    public void RemoveFromGrid(Vector3 worldCoordinates)
+    public PlaceableItem RemoveFromGrid(Vector3 worldCoordinates)
     {
         Item itemOnCoordinates = _grid.GetContentWithCoords(worldCoordinates);
 
-        if (itemOnCoordinates == null) { return; }
+        if (itemOnCoordinates == null) 
+        { 
+            return null;
+        }
+
         _grid.ClearContentWithItem(itemOnCoordinates);
-        DestroyObjectOnGrid(itemOnCoordinates);
+        PlaceableItem removedObject = UnregisterObjectOnGrid(itemOnCoordinates);
         DrawGridDebug();
+        return removedObject;
     }
 
-    public bool TryPlaceOnGrid(Vector3 worldCoordinates, Item item, GameObject placedObject)
+    public bool TryPlaceOnGrid(Vector3 worldCoordinates, Item item, PlaceableItem placedObject)
     {
-        if (_grid.CanPlaceContent(worldCoordinates, item))
+        if (!_grid.CanPlaceContent(worldCoordinates, item))
         {
             return false;
         }
 
-        _grid.PlaceContent(worldCoordinates, item);
-        SpawnObjectOnGrid(item, placedObject);
+        _grid.PlaceContentInCells(worldCoordinates, item);
+        RegisterObjectOnGrid(item, placedObject);
         DrawGridDebug();
         return true;
     }
@@ -59,18 +64,16 @@ public class GridVisual : MonoBehaviour
         return _grid.SnapToGrid(freeWorldCoordinates);
     }
 
-    private void SpawnObjectOnGrid(Item item, GameObject spawnedGameObject)
+    private void RegisterObjectOnGrid(Item item, PlaceableItem spawnedGameObject)
     {
-        //Vector2Int itemIndex = _grid.GetItemOrigin(item);
-        //Vector3 worldCoords = _grid.GridToWorld(itemIndex);
-        //GameObject itemGameObject = Instantiate(item.Visuals, worldCoords, Quaternion.identity);
         _gameObjectMap.Add(item, spawnedGameObject);
     }
 
-    private void DestroyObjectOnGrid(Item item)
+    private PlaceableItem UnregisterObjectOnGrid(Item item)
     {
-        Destroy(_gameObjectMap[item]);
+        PlaceableItem unregisteredObject = _gameObjectMap[item];
         _gameObjectMap.Remove(item);
+        return unregisteredObject;
     }
 
     private void DrawGridDebug()

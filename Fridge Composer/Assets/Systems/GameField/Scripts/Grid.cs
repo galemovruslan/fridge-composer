@@ -51,7 +51,7 @@ public class Grid
     }
 
 
-    public void PlaceContent(Vector3 worldCoords, Item item)
+    public void PlaceContentInCells(Vector3 worldCoords, Item item)
     {
         Vector2Int startCoordinate = WorldToGrid(worldCoords);
         List<Vector2Int> ocupiedIndices = GetOcupiedGridIndices(startCoordinate, item);
