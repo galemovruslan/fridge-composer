@@ -14,6 +14,7 @@ public class GridVisual : MonoBehaviour
     private Grid _grid;
     private BoxCollider _collider;
     private Dictionary<Item, PlaceableItem> _gameObjectMap = new Dictionary<Item, PlaceableItem>();
+    private Dictionary<Vector2Int, GameObject> _cellObjects = new Dictionary<Vector2Int, GameObject>();
 
     void Awake()
     {
@@ -21,14 +22,14 @@ public class GridVisual : MonoBehaviour
         _cols = _gridDescription.Cols;
         _width = _gridDescription.Width;
 
-        _grid = new Grid(_rows, _cols, _width, offset: transform.position, _gridDescription.Description);
+        _grid = new Grid(_rows, _cols, _width, offset: transform.position, _gridDescription.GetDescription);
         _collider = GetComponent<BoxCollider>();
     }
 
     private void Start()
     {
         FitCollider(_rows, _cols, _width, transform.position);
-        DrawGridDebug();
+        DrawCells();
     }
 
     public PlaceableItem RemoveFromGrid(Vector3 worldCoordinates)
@@ -42,7 +43,6 @@ public class GridVisual : MonoBehaviour
 
         _grid.ClearContentWithItem(itemOnCoordinates);
         PlaceableItem removedObject = UnregisterObjectOnGrid(itemOnCoordinates);
-        DrawGridDebug();
         return removedObject;
     }
 
@@ -55,7 +55,6 @@ public class GridVisual : MonoBehaviour
 
         _grid.PlaceContentInCells(worldCoordinates, item);
         RegisterObjectOnGrid(item, placedObject);
-        DrawGridDebug();
         return true;
     }
 
@@ -74,6 +73,23 @@ public class GridVisual : MonoBehaviour
         PlaceableItem unregisteredObject = _gameObjectMap[item];
         _gameObjectMap.Remove(item);
         return unregisteredObject;
+    }
+
+    private void DrawCells()
+    {
+        for (int row = 0; row < _rows; row++)
+        {
+            for (int cols = 0; cols < _cols; cols++)
+            {
+                SurfaceDescription cellDescription = _grid.GetCellDescription(row, cols);
+
+                
+                Vector2Int cellIndices = new Vector2Int(row, cols);
+                Vector3 spawnCoordinates = _grid.GridToWorld(cellIndices);
+                GameObject cellVisual = Instantiate(cellDescription.Visual.gameObject, spawnCoordinates, Quaternion.identity, transform);
+                _cellObjects.Add(cellIndices, cellVisual);
+            }
+        }
     }
 
     private void DrawGridDebug()

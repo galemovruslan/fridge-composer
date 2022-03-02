@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9eba0ab485d9464885782b0132bf254, type: 3}
-  m_Name: Cold_short
+  m_Name: 2x2 Cold_short
   m_EditorClassIdentifier: 
   _attributes:
   - {fileID: 11400000, guid: 65a5f32b41c2bf143a6e0221ae7992ae, type: 2}
   - {fileID: 11400000, guid: 9cb8ad81657741e4dbeb671ffa3ef19d, type: 2}
   _rowNum: 2
   _colNum: 2
-  _visuals: {fileID: 3468784119889465850, guid: 629402fa47e31e443a301cb691eccb84, type: 3}
+  _visuals: {fileID: 3468784119889465850, guid: 3be561374e15e404881be016783e16cd, type: 3}

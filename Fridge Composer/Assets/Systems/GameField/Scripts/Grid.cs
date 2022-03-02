@@ -13,7 +13,7 @@ public class Grid
     private Dictionary<Item, List<Vector2Int>> _gridIndicesMap;
 
 
-    public Grid(int rows, int cols, int cellWidth, Vector3 offset, SurfaceDescription cellAttributes)
+    public Grid(int rows, int cols, int cellWidth, Vector3 offset, Func<Vector2Int, SurfaceDescription> descriptionGetter)
     {
         _offset = offset;
         _cellWidth = cellWidth;
@@ -26,7 +26,8 @@ public class Grid
         {
             for (int col = 0; col < _colsNumber; col++)
             {
-                _cells[row, col] = new Cell(cellAttributes);
+                var cellDescription = descriptionGetter(new Vector2Int(row, col));
+                _cells[row, col] = new Cell(cellDescription);
             }
         }
     }
@@ -128,6 +129,11 @@ public class Grid
         Vector2Int itemIndex = WorldToGrid(freeWorldCoordinates);
         Vector3 worldCoords = GridToWorld(itemIndex);
         return worldCoords;
+    }
+
+    public SurfaceDescription GetCellDescription(int row, int col)
+    {
+        return _cells[row, col].SurfaceDescrption;
     }
 
     private Vector2Int WorldToGrid(Vector3 coords)

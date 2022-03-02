@@ -10,10 +10,12 @@ public class PlaceableItem : MonoBehaviour
 
     private Item _item;
     private bool _placed = false;
+    private GameObject _visuals;
 
     private void Awake()
     {
         _item = new Item(_description);
+        _visuals = Instantiate(_description.Visuals, transform);
     }
 
     public void SetPlaced(bool value)

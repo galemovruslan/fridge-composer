@@ -15,4 +15,13 @@ MonoBehaviour:
   _rows: 4
   _cols: 4
   _width: 1
-  _description: {fileID: 11400000, guid: 889f5172bec90b445b75908b3ded19bf, type: 2}
+  _baseSurface: {fileID: 11400000, guid: 889f5172bec90b445b75908b3ded19bf, type: 2}
+  _alternativeSurfaces:
+  - Indices: {x: 0, y: 0}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}
+  - Indices: {x: 1, y: 0}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}
+  - Indices: {x: 1, y: 1}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}
+  - Indices: {x: 0, y: 1}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}

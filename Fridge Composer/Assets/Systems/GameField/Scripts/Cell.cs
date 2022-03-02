@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Cell
 {
+    public SurfaceDescription SurfaceDescrption => _surfaceDescrption; 
+    
     private SurfaceDescription _surfaceDescrption;
-
     private Item _content;
 
     public Cell(SurfaceDescription description)

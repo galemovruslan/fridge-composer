@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9eba0ab485d9464885782b0132bf254, type: 3}
-  m_Name: Hot_tall
+  m_Name: 1x1 Hot_tall
   m_EditorClassIdentifier: 
   _attributes:
   - {fileID: 11400000, guid: e05920e518011c7429002a11fc168aed, type: 2}
   - {fileID: 11400000, guid: 1aa35aabffda9ef42b476c94ca854c1c, type: 2}
+  _rowNum: 1
+  _colNum: 1
+  _visuals: {fileID: 3468784119889465850, guid: 629402fa47e31e443a301cb691eccb84, type: 3}
