@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class PlaceableItem : MonoBehaviour
 {
-    public Item Item { get => _item; }
+    public Item Item => _item;
 
     [SerializeField] private ItemDesciption _description;
 
     private Item _item;
-    private bool _placed = false;
     private GameObject _visuals;
-
+    bool _originalOrientation = true;
     private void Awake()
     {
         _item = new Item(_description);
         _visuals = Instantiate(_description.Visuals, transform);
     }
 
-    public void SetPlaced(bool value)
+    public void SwapOrientation()
     {
-        _placed = value;
-    }
+        _item.SwapOrientation();
 
-    public void ChangeItem(ItemDesciption itemDesciption)
-    {
-        _description = itemDesciption;
-        _item = new Item(_description);
+        float newOrientation = _originalOrientation ? -90f : 90f;
+        _visuals.transform.Rotate(new Vector3(0, newOrientation, 0));
+
+        float newTranslation = _originalOrientation ? 1f : -1f;
+        _visuals.transform.Translate(new Vector3(newTranslation, 0, 0), Space.World);
+
+        _originalOrientation = !_originalOrientation;
     }
 }

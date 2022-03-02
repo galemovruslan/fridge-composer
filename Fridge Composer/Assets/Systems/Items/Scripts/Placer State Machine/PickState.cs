@@ -8,7 +8,7 @@ public class PickState : PlacerState
     {
     }
 
-    public override void Tick()
+    public override void ClickHandle()
     {
         InteractWithGrid((grid, worldCoordinates) =>
         {

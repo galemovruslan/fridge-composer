@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class GridVisual : MonoBehaviour
+public class GridInteractor : MonoBehaviour
 {
     [SerializeField] private GridDescription _gridDescription;
 
@@ -36,8 +36,8 @@ public class GridVisual : MonoBehaviour
     {
         Item itemOnCoordinates = _grid.GetContentWithCoords(worldCoordinates);
 
-        if (itemOnCoordinates == null) 
-        { 
+        if (itemOnCoordinates == null)
+        {
             return null;
         }
 
@@ -46,16 +46,22 @@ public class GridVisual : MonoBehaviour
         return removedObject;
     }
 
-    public bool TryPlaceOnGrid(Vector3 worldCoordinates, Item item, PlaceableItem placedObject)
+    public bool TryPlaceOnGrid(Vector3 worldCoordinates, PlaceableItem placedObject)
     {
-        if (!_grid.CanPlaceContent(worldCoordinates, item))
+        if (!_grid.CanPlaceContent(worldCoordinates, placedObject.Item))
         {
             return false;
         }
 
-        _grid.PlaceContentInCells(worldCoordinates, item);
-        RegisterObjectOnGrid(item, placedObject);
+        _grid.PlaceContentInCells(worldCoordinates, placedObject.Item);
+        RegisterObjectOnGrid(placedObject.Item, placedObject);
         return true;
+    }
+
+    public bool TryPlaceWithIndices(Vector2Int indices, PlaceableItem placedObject)
+    {
+        Vector3 cellCoordinates = _grid.GridToWorld(indices);
+        return TryPlaceOnGrid(cellCoordinates, placedObject);
     }
 
     public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
@@ -83,7 +89,6 @@ public class GridVisual : MonoBehaviour
             {
                 SurfaceDescription cellDescription = _grid.GetCellDescription(row, cols);
 
-                
                 Vector2Int cellIndices = new Vector2Int(row, cols);
                 Vector3 spawnCoordinates = _grid.GridToWorld(cellIndices);
                 GameObject cellVisual = Instantiate(cellDescription.Visual.gameObject, spawnCoordinates, Quaternion.identity, transform);
@@ -117,7 +122,7 @@ public class GridVisual : MonoBehaviour
                 Debug.DrawLine(startPoint, endPointVertical, Color.white, 999);
 
                 Vector3 textOffset = new Vector3(_width / 2.0f, 0f, _width / 2.0f);
-                Vector3 textPosition = transform.InverseTransformPoint( startPoint) + textOffset;
+                Vector3 textPosition = transform.InverseTransformPoint(startPoint) + textOffset;
 
                 var item = _grid.GetContentWithIndex(new Vector2Int(row, col));
                 string cellText = item == null ? "null" : "1";
@@ -142,7 +147,7 @@ public class GridVisual : MonoBehaviour
 
         float gridCenterX = xSize / 2;
         float gridCenterZ = zSize / 2;
-        _collider.center = new Vector3(gridCenterX, transform.position.y, gridCenterZ);
+        _collider.center = new Vector3(gridCenterX, 0, gridCenterZ);
         _collider.size = new Vector3(xSize, _collider.size.y, zSize);
     }
 

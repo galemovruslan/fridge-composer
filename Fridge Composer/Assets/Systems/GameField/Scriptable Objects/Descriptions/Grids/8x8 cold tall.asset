@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2498ad330114de34ba6c96753e7397d8, type: 3}
+  m_Name: 8x8 cold tall
+  m_EditorClassIdentifier: 
+  _rows: 8
+  _cols: 8
+  _width: 1
+  _baseSurface: {fileID: 11400000, guid: 889f5172bec90b445b75908b3ded19bf, type: 2}
+  _alternativeSurfaces:
+  - Indices: {x: 0, y: 0}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}
+  - Indices: {x: 1, y: 0}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}
+  - Indices: {x: 1, y: 1}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}
+  - Indices: {x: 0, y: 1}
+    ModifiedSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}

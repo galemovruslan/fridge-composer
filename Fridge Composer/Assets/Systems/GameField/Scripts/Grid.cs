@@ -87,7 +87,7 @@ public class Grid
         float z = gridCoords.y * _cellWidth + _offset.z;
         return new Vector3(x, y, z);
     }
-
+    /*
     public bool CheckOnGrid(Vector3 worldCoordinates)
     {
         float xStart = _offset.x;
@@ -101,7 +101,7 @@ public class Grid
             (zStart <= worldCoordinates.z) && (worldCoordinates.z <= zEnd);
 
     }
-
+    */
     public void ClearContentWithCoordinates(Vector3 coords)
     {
         var indexes = WorldToGrid(coords);

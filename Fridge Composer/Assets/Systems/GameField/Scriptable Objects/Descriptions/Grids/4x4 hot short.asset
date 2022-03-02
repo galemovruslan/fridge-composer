@@ -16,6 +16,4 @@ MonoBehaviour:
   _cols: 4
   _width: 1
   _baseSurface: {fileID: 11400000, guid: ab5bf25db7cd1fe4abf03f3034115e06, type: 2}
-  _alternativeSurfaces:
-  - indices: {x: 0, y: 0}
-    _modifiedSurface: {fileID: 0}
+  _alternativeSurfaces: []

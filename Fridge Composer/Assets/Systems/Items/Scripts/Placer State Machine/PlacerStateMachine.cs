@@ -17,9 +17,14 @@ public class PlacerStateMachine
         _currentState.MoveItem();
     }
 
-    public void Tick()
+    public void ClickHandle()
     {
-        _currentState.Tick();
+        _currentState.ClickHandle();
+    }
+
+    public void RotateHandle()
+    {
+        _currentState.RotateHandle();
     }
 
 }

@@ -10,7 +10,7 @@ public class PlaceState : PlacerState
     {
     }
     
-    public override void Tick()
+    public override void ClickHandle()
     {
         if (_currentItem == null) 
         {
@@ -21,7 +21,7 @@ public class PlaceState : PlacerState
 
         InteractWithGrid((grid, worldCoordinates) =>
         {
-            if (!grid.TryPlaceOnGrid(worldCoordinates, itemToPlace, _currentItem)) 
+            if (!grid.TryPlaceOnGrid(worldCoordinates, _currentItem)) 
             {
                 return; 
             }

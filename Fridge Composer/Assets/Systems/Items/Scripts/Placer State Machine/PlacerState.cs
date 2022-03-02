@@ -10,7 +10,7 @@ public abstract class PlacerState
     
     private Camera _camera;
 
-    public abstract void Tick();
+    public abstract void ClickHandle();
     protected abstract void ChangeState();
 
     public PlacerState(PlacerStateMachine stateMachine, PlaceableItem item)
@@ -19,6 +19,16 @@ public abstract class PlacerState
         _stateMachine = stateMachine;
         _camera = Camera.main;
     }
+
+    public void RotateHandle()
+    {
+        if (_currentItem == null)
+        {
+            return;
+        }
+        _currentItem.SwapOrientation();
+    }
+
 
     public void MoveItem()
     {
@@ -31,12 +41,12 @@ public abstract class PlacerState
         });
     }
 
-    protected void InteractWithGrid(Action<GridVisual, Vector3> interaction)
+    protected void InteractWithGrid(Action<GridInteractor, Vector3> interaction)
     {
         Ray screenRay = _camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(screenRay, out var hit))
         {
-            if (!hit.transform.TryGetComponent<GridVisual>(out GridVisual grid)) { return; }
+            if (!hit.transform.TryGetComponent<GridInteractor>(out GridInteractor grid)) { return; }
 
             Vector3 worldCoordinates = hit.point;
             interaction.Invoke(grid, worldCoordinates);
