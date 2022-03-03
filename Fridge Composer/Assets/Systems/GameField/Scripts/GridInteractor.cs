@@ -53,6 +53,7 @@ public class GridInteractor : MonoBehaviour
             return false;
         }
 
+        placedObject.transform.position = SnapToGrid(worldCoordinates);
         _grid.PlaceContentInCells(worldCoordinates, placedObject.Item);
         RegisterObjectOnGrid(placedObject.Item, placedObject);
         return true;
@@ -67,6 +68,19 @@ public class GridInteractor : MonoBehaviour
     public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
     {
         return _grid.SnapToGrid(freeWorldCoordinates);
+    }
+
+    public List<Vector2Int> GetAllIndices()
+    {
+        List<Vector2Int> indices = new List<Vector2Int>();
+        for (int row = 0; row < _rows; row++)
+        {
+            for (int col = 0; col < _cols; col++)
+            {
+                indices.Add(new Vector2Int(row, col));
+            }
+        }
+        return indices;
     }
 
     private void RegisterObjectOnGrid(Item item, PlaceableItem spawnedGameObject)

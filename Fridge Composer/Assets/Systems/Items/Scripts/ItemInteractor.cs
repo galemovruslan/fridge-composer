@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPlacer : MonoBehaviour
+public class ItemInteractor : MonoBehaviour
 {
 
     [SerializeField] private PlaceableItem _currentItemPrefab;
@@ -13,10 +13,10 @@ public class ItemPlacer : MonoBehaviour
 
     private void Awake()
     {
-        _currentItem = Instantiate(_currentItemPrefab);
+        //_currentItem = Instantiate(_currentItemPrefab);
 
         _stateMachine = new PlacerStateMachine();
-        var startState = new PlaceState(_stateMachine, _currentItem);
+        var startState = new PickState(_stateMachine, _currentItem);
         _stateMachine.ChangeState(startState);
     }
 

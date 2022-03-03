@@ -132,8 +132,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 468782382}
-  - component: {fileID: 468782381}
   - component: {fileID: 468782383}
+  - component: {fileID: 468782381}
+  - component: {fileID: 468782384}
   m_Layer: 0
   m_Name: Grid Cold
   m_TagString: Untagged
@@ -153,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cb601c0b8db3d4a85f96e3c4a5f81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridDescription: {fileID: 11400000, guid: e4be45726ee18784f8f1082ec3b216c9, type: 2}
+  _gridDescription: {fileID: 11400000, guid: f923c9f3c8ef8534c8eb324bc2cca746, type: 2}
 --- !u!4 &468782382
 Transform:
   m_ObjectHideFlags: 0
@@ -181,6 +182,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.54, y: 0.1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &468782384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468782380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6977ad75b272984fba8ac395b9c2562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _grid: {fileID: 468782381}
+  _itemPrefabs:
+  - {fileID: 4156250321117014348, guid: 09c54b172bda90e45afc850d47dbe4ff, type: 3}
+  - {fileID: 4156250321117014348, guid: e2cdb19299f67644497281550b2a744e, type: 3}
+  - {fileID: 4156250321117014348, guid: 4f78a7904fd96614fa64c7e643ab2d85, type: 3}
+  - {fileID: 4156250321117014348, guid: 8f05a129cb9f7b4408c1ac3efd4c1566, type: 3}
 --- !u!1 &1117137991
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,11 @@ public class PlaceableItem : MonoBehaviour
 
     public void SwapOrientation()
     {
+        if(_item.Sizes.x == _item.Sizes.y)
+        {
+            return;
+        }
+
         _item.SwapOrientation();
 
         float newOrientation = _originalOrientation ? -90f : 90f;
