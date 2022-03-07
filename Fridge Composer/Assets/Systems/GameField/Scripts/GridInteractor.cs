@@ -22,7 +22,10 @@ public class GridInteractor : MonoBehaviour
         _cols = _gridDescription.Cols;
         _width = _gridDescription.Width;
 
-        _grid = new Grid(_rows, _cols, _width, offset: transform.position, _gridDescription.GetDescription);
+        Vector3 offset = transform.position - 
+            new Vector3(_rows/2.0f * _width, 0, _cols/2.0f * _width);
+
+        _grid = new Grid(_rows, _cols, _width, offset, _gridDescription.GetDescription);
         _collider = GetComponent<BoxCollider>();
     }
 
@@ -34,7 +37,7 @@ public class GridInteractor : MonoBehaviour
 
     public PlaceableItem RemoveFromGrid(Vector3 worldCoordinates)
     {
-        Item itemOnCoordinates = _grid.GetContentWithCoords(worldCoordinates);
+        Item itemOnCoordinates = _grid.GetContent(worldCoordinates);
 
         if (itemOnCoordinates == null)
         {
@@ -48,21 +51,21 @@ public class GridInteractor : MonoBehaviour
 
     public bool TryPlaceOnGrid(Vector3 worldCoordinates, PlaceableItem placedObject)
     {
-        if (!_grid.CanPlaceContent(worldCoordinates, placedObject.Item))
+        Vector2Int startIndices = _grid.WorldToGrid(worldCoordinates);
+        return TryPlaceOnGrid(startIndices, placedObject);
+    }
+
+    public bool TryPlaceOnGrid(Vector2Int indices, PlaceableItem placedObject)
+    {
+        if (!_grid.CanPlaceContent(indices, placedObject.Item))
         {
             return false;
         }
 
-        placedObject.transform.position = SnapToGrid(worldCoordinates);
-        _grid.PlaceContentInCells(worldCoordinates, placedObject.Item);
+        placedObject.transform.position = _grid.GridToWorld(indices);
+        _grid.PlaceContentInCells(indices, placedObject.Item);
         RegisterObjectOnGrid(placedObject.Item, placedObject);
         return true;
-    }
-
-    public bool TryPlaceWithIndices(Vector2Int indices, PlaceableItem placedObject)
-    {
-        Vector3 cellCoordinates = _grid.GridToWorld(indices);
-        return TryPlaceOnGrid(cellCoordinates, placedObject);
     }
 
     public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
@@ -81,6 +84,20 @@ public class GridInteractor : MonoBehaviour
             }
         }
         return indices;
+    }
+
+    public List<Vector2Int> PosiblePlaceIndices(Item item)
+    {
+        var availablePlaces = new List<Vector2Int>();
+        foreach (Vector2Int posiblePlace in GetAllIndices())
+        {
+            bool isPlaceable = _grid.CanPlaceContent(posiblePlace, item);
+            if (isPlaceable)
+            {
+                availablePlaces.Add(posiblePlace);
+            }
+        }
+        return availablePlaces;
     }
 
     private void RegisterObjectOnGrid(Item item, PlaceableItem spawnedGameObject)
@@ -138,7 +155,7 @@ public class GridInteractor : MonoBehaviour
                 Vector3 textOffset = new Vector3(_width / 2.0f, 0f, _width / 2.0f);
                 Vector3 textPosition = transform.InverseTransformPoint(startPoint) + textOffset;
 
-                var item = _grid.GetContentWithIndex(new Vector2Int(row, col));
+                var item = _grid.GetContent(new Vector2Int(row, col));
                 string cellText = item == null ? "null" : "1";
 
                 Utils.CreateWorldText(cellText,
@@ -161,7 +178,7 @@ public class GridInteractor : MonoBehaviour
 
         float gridCenterX = xSize / 2;
         float gridCenterZ = zSize / 2;
-        _collider.center = new Vector3(gridCenterX, 0, gridCenterZ);
+        _collider.center = new Vector3(0, 0, 0);
         _collider.size = new Vector3(xSize, _collider.size.y, zSize);
     }
 

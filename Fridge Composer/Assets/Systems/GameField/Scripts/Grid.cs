@@ -34,12 +34,17 @@ public class Grid
 
     public bool CanPlaceContent(Vector3 worldCoords, Item item)
     {
-        Vector2Int startCoordinate = WorldToGrid(worldCoords);
-        List<Vector2Int> cellIndices = GetOcupiedGridIndices(startCoordinate, item);
+        Vector2Int startIndex = WorldToGrid(worldCoords);
+        return CanPlaceContent(startIndex, item);
+    }
 
-        if(cellIndices.Count == 0) 
-        { 
-            return false; 
+    public bool CanPlaceContent(Vector2Int startIndex, Item item)
+    {
+        List<Vector2Int> cellIndices = GetOcupiedGridIndices(startIndex, item);
+
+        if (cellIndices.Count == 0)
+        {
+            return false;
         }
 
         bool canPlaceHere = true;
@@ -51,11 +56,15 @@ public class Grid
         return canPlaceHere;
     }
 
-
     public void PlaceContentInCells(Vector3 worldCoords, Item item)
     {
         Vector2Int startCoordinate = WorldToGrid(worldCoords);
-        List<Vector2Int> ocupiedIndices = GetOcupiedGridIndices(startCoordinate, item);
+        PlaceContentInCells(startCoordinate, item);
+    }
+
+    public void PlaceContentInCells(Vector2Int indices, Item item)
+    {
+        List<Vector2Int> ocupiedIndices = GetOcupiedGridIndices(indices, item);
 
         foreach (var coordinate in ocupiedIndices)
         {
@@ -69,15 +78,15 @@ public class Grid
         return _gridIndicesMap[item][0];
     }
 
-    public Item GetContentWithIndex(Vector2Int gridIdx)
+    public Item GetContent(Vector2Int gridIdx)
     {
         return _cells[gridIdx.x, gridIdx.y].GetContent();
     }
 
-    public Item GetContentWithCoords(Vector3 worldCoords)
+    public Item GetContent(Vector3 worldCoords)
     {
         Vector2Int gridIndexes = WorldToGrid(worldCoords);
-        return GetContentWithIndex(gridIndexes);
+        return GetContent(gridIndexes);
     }
 
     public Vector3 GridToWorld(Vector2Int gridCoords)
@@ -136,7 +145,7 @@ public class Grid
         return _cells[row, col].SurfaceDescrption;
     }
 
-    private Vector2Int WorldToGrid(Vector3 coords)
+    public Vector2Int WorldToGrid(Vector3 coords)
     {
         int row = Mathf.FloorToInt((coords.x - _offset.x) / _cellWidth);
         int col = Mathf.FloorToInt((coords.z - _offset.z) / _cellWidth);

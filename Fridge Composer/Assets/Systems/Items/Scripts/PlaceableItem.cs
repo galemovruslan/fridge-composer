@@ -19,7 +19,7 @@ public class PlaceableItem : MonoBehaviour
 
     public void SwapOrientation()
     {
-        if(_item.Sizes.x == _item.Sizes.y)
+        if(_item.IsSymetrical)
         {
             return;
         }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Item
 {
+    public bool IsSymetrical => _sizes.x == _sizes.y;
     public Vector2Int Sizes => _sizes;
     public GameObject Visuals => _description.Visuals;
 
