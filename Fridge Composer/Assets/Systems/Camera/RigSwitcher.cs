@@ -6,7 +6,7 @@ using System.Linq;
 
 public class RigSwitcher : MonoBehaviour
 {
-    [SerializeField] private RuntimeRepository _rigRepository;
+    [SerializeField] private GameObjectRuntimeSet _rigRepository;
 
     private List<CameraRig> _sceneRigs = new List<CameraRig>();
 

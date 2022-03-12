@@ -1,22 +1,21 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Chanels/Repository")]
-public class RuntimeRepository : ScriptableObject
+
+public abstract class RuntimeSet<T> : ScriptableObject
 {
     public event Action OnAdd;
     public event Action OnRemove;
 
-    private List<GameObject> _data = new List<GameObject>();
+    private List<T> _data = new List<T>();
 
     private void OnEnable()
     {
         _data.Clear();
     }
 
-    public void AddObject(GameObject newObject)
+    public void AddObject(T newObject)
     {
         if (_data.Contains(newObject)) { return; }
 
@@ -24,7 +23,7 @@ public class RuntimeRepository : ScriptableObject
         OnAdd?.Invoke();
     }
 
-    public void RemoveObject(GameObject gameObject)
+    public void RemoveObject(T gameObject)
     {
         if (!_data.Contains(gameObject)) { return; }
 
@@ -36,13 +35,13 @@ public class RuntimeRepository : ScriptableObject
         }
     }
 
-    public List<GameObject> GetObjects()
+    public List<T> GetObjects()
     {
         return _data;
         
     }
 
-    public bool Contains(GameObject obj)
+    public bool Contains(T obj)
     {
         return _data.Contains(obj);
     }

@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 977969459251651016}
   - component: {fileID: 2051472850882164506}
-  - component: {fileID: 8892025432016923630}
+  - component: {fileID: 3812644200695221652}
   m_Layer: 0
   m_Name: Camera Rig
   m_TagString: Untagged
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigCamera: {fileID: 977969458864200020}
---- !u!114 &8892025432016923630
+--- !u!114 &3812644200695221652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849f5c30ebd0f504bb7beafee1ea2833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _repository: {fileID: 11400000, guid: bf70c0e7d8798084981016632484cf2f, type: 2}
+  _runtimeSet: {fileID: 11400000, guid: c8ac63e99d6ae0542986c6d5eaa2be3c, type: 2}
 --- !u!1 &977969459976851862
 GameObject:
   m_ObjectHideFlags: 0

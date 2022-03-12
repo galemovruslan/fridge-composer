@@ -73,7 +73,7 @@ public class GridInteractor : MonoBehaviour
         return _grid.SnapToGrid(freeWorldCoordinates);
     }
 
-    public List<Vector2Int> GetAllIndices()
+    public List<Vector2Int> GetGridIndices()
     {
         List<Vector2Int> indices = new List<Vector2Int>();
         for (int row = 0; row < _rows; row++)
@@ -89,7 +89,7 @@ public class GridInteractor : MonoBehaviour
     public List<Vector2Int> PosiblePlaceIndices(Item item)
     {
         var availablePlaces = new List<Vector2Int>();
-        foreach (Vector2Int posiblePlace in GetAllIndices())
+        foreach (Vector2Int posiblePlace in GetGridIndices())
         {
             bool isPlaceable = _grid.CanPlaceContent(posiblePlace, item);
             if (isPlaceable)

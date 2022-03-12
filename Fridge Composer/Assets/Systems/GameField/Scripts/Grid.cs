@@ -73,6 +73,14 @@ public class Grid
         _gridIndicesMap.Add(item, ocupiedIndices);
     }
 
+    public IEnumerable<Item> GetPlacedItems()
+    {
+        foreach (var item in _gridIndicesMap.Keys)
+        {
+            yield return item;
+        }
+    } 
+
     public Vector2Int GetItemOrigin(Item item)
     {
         return _gridIndicesMap[item][0];
