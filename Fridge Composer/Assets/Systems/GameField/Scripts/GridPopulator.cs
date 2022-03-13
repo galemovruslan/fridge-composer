@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,10 +6,12 @@ using UnityEngine;
 
 public class GridPopulator : MonoBehaviour
 {
+    public static event Action<Item> OnCreateItem;
+
     [SerializeField] private GridInteractor _grid;
     [SerializeField] private List<PlaceableItem> _itemPrefabs;
 
-    private List<OcupationVariant> _ocupationVariants = new List<OcupationVariant>();
+    private List<OcupationVariant> _itemOcupationVariantsSorted = new List<OcupationVariant>();
 
     private void Start()
     {
@@ -20,17 +23,19 @@ public class GridPopulator : MonoBehaviour
         foreach (var itemPrefab in _itemPrefabs)
         {
             PlaceableItem item = Instantiate(itemPrefab);
-            List<Vector2Int> posiblePlaces = GetPlaceIndices(item);
+            List<Vector2Int> posiblePlaces = GetAvailablePlaceIndices(item);
 
             var variant = new OcupationVariant() { Item = item, PosiblePlaces = posiblePlaces };
-            _ocupationVariants.Add(variant);
+            _itemOcupationVariantsSorted.Add(variant);
+
+            OnCreateItem?.Invoke(item.Item);
         }
 
-        _ocupationVariants.Sort(
+        _itemOcupationVariantsSorted.Sort(
             (variant1, variant2) =>
             variant1.PosiblePlaces.Count.CompareTo(variant2.PosiblePlaces.Count));
 
-        foreach (var variant in _ocupationVariants)
+        foreach (var variant in _itemOcupationVariantsSorted)
         {
             PlaceItem(variant);
         }
@@ -62,7 +67,7 @@ public class GridPopulator : MonoBehaviour
         while (!placed && placeIndex < variant.PosiblePlaces.Count);
     }
 
-    private List<Vector2Int> GetPlaceIndices(PlaceableItem item)
+    private List<Vector2Int> GetAvailablePlaceIndices(PlaceableItem item)
     {
         var posiblePlaces = _grid.PosiblePlaceIndices(item.Item);
         if (!item.Item.IsSymetrical)

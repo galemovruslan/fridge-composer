@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class GridInteractor : MonoBehaviour
 {
+    public static Action<Item> OnPlaceItem;
+    public static Action<Item> OnRemoveItem;
+
+    [field: SerializeField]
+    public bool InFridge { get; private set; }
+
     [SerializeField] private GridDescription _gridDescription;
 
     private int _rows;
@@ -46,6 +52,11 @@ public class GridInteractor : MonoBehaviour
 
         _grid.ClearContentWithItem(itemOnCoordinates);
         PlaceableItem removedObject = UnregisterObjectOnGrid(itemOnCoordinates);
+        
+        if (InFridge)
+        {
+            OnRemoveItem?.Invoke(itemOnCoordinates);
+        }
         return removedObject;
     }
 
@@ -65,6 +76,11 @@ public class GridInteractor : MonoBehaviour
         placedObject.transform.position = _grid.GridToWorld(indices);
         _grid.PlaceContentInCells(indices, placedObject.Item);
         RegisterObjectOnGrid(placedObject.Item, placedObject);
+        
+        if (InFridge)
+        {
+            OnPlaceItem?.Invoke(placedObject.Item);
+        }
         return true;
     }
 
