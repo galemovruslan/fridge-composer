@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigCamera: {fileID: 977969458864200020}
+  _buttonPrefab: {fileID: 2526933528730679508, guid: 3a39045dd0234b14cb2a251dee59d9e9, type: 3}
 --- !u!114 &3812644200695221652
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -29,7 +29,10 @@ public class ItemsInFridgeCondition : Condition
 
     public override void StartChecking(){}
 
-    public override void PauseChecking(){}
+    public override void PauseChecking()
+    {
+        _progress.TogglePause();
+    }
 
     public override void Tick(float deltaTime){}
 

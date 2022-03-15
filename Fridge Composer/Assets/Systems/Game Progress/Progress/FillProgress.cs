@@ -9,11 +9,17 @@ public class FillProgress
     private HashSet<Item> _spawnedItems = new HashSet<Item>();
     private HashSet<Item> _itemsOnGoals = new HashSet<Item>();
     private event Action _onComplete;
+    private bool _isPaused = false;
+
+    public void TogglePause()
+    {
+        _isPaused = !_isPaused;
+    }
 
     public void HandlePlaceItem(Item placedItem)
     {
         _itemsOnGoals.Add(placedItem);
-        if (CheckIsComplete())
+        if (CheckIsComplete() && !_isPaused)
         {
             GameCompleted();
         }

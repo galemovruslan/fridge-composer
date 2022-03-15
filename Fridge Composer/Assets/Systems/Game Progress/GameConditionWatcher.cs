@@ -33,11 +33,13 @@ public class GameConditionWatcher : MonoBehaviour
     {
         Debug.Log("Win");
         _winConditions.PauseConditions();
+        _loseConditions.PauseConditions();
     }
 
     private void HanldeLose()
     {
         Debug.Log("Lose");
+        _winConditions.PauseConditions();
         _loseConditions.PauseConditions();
     }
 }

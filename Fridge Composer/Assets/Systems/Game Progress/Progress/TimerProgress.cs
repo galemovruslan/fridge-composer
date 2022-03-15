@@ -14,8 +14,8 @@ public class TimerProgress
 
     public void Start(float presetValue)
     {
-        _timerValue = 0f;
-        _presetValue = presetValue;
+        _timerValue = presetValue;
+        _presetValue = 0f;
     }
 
     public void TogglePause()
@@ -30,9 +30,9 @@ public class TimerProgress
             return; 
         }
 
-        _timerValue += deltaTime;
+        _timerValue -= deltaTime;
 
-        if(_timerValue >= _presetValue)
+        if(_timerValue <= _presetValue)
         {
             _onTimerEnd?.Invoke();
         }
