@@ -301,8 +301,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 58.631107, y: -64.0549}
-  m_SizeDelta: {x: 277.2621, y: 158.1098}
+  m_AnchoredPosition: {x: 58.631107, y: 87.4}
+  m_SizeDelta: {x: 277.2621, y: 211.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &336292381
 MonoBehaviour:
@@ -337,8 +337,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0421\u0414\u0415\u041B\u0410\u0422\u042C \u041F\u0420\u041E\u0412\u0415\u0420\u041A\u0423
-    \n\u0412\u042B\u0419\u0413\u0420\u042B\u0428\u0410"
+  m_Text: 'TODO:'
 --- !u!222 &336292382
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -456,7 +455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 529301730}
-  - component: {fileID: 529301729}
+  - component: {fileID: 529301731}
   m_Layer: 0
   m_Name: Game Progress
   m_TagString: Untagged
@@ -464,19 +463,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &529301729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529301728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0324ac266dcbd814fa5338e4ec200453, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _grids: {fileID: 11400000, guid: 86c6cebd866764d478d1a35c473f64ff, type: 2}
 --- !u!4 &529301730
 Transform:
   m_ObjectHideFlags: 0
@@ -491,6 +477,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &529301731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529301728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb04c2512e216844877eea5f7a5f887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _winConditions: {fileID: 11400000, guid: d8dd96d6a705e7343ad80fd32d35e699, type: 2}
+  _loseConditions: {fileID: 11400000, guid: 966407481f8c5924a8a711dfbe887e42, type: 2}
 --- !u!1 &538865974
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6977ad75b272984fba8ac395b9c2562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onCreateItem: {fileID: 0}
   _grid: {fileID: 621179949}
   _itemPrefabs:
   - {fileID: 4156250321117014348, guid: e2cdb19299f67644497281550b2a744e, type: 3}
@@ -650,6 +651,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cb601c0b8db3d4a85f96e3c4a5f81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onPlaceItem: {fileID: 0}
+  _onRemoveItem: {fileID: 0}
   <InFridge>k__BackingField: 0
   _gridDescription: {fileID: 11400000, guid: f923c9f3c8ef8534c8eb324bc2cca746, type: 2}
 --- !u!65 &621179950
@@ -972,6 +975,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cb601c0b8db3d4a85f96e3c4a5f81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onPlaceItem: {fileID: 0}
+  _onRemoveItem: {fileID: 0}
   <InFridge>k__BackingField: 0
   _gridDescription: {fileID: 11400000, guid: afd5e304a2d224c4e99d2575dddb7f73, type: 2}
 --- !u!4 &1150541747

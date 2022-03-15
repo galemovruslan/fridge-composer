@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class GridInteractor : MonoBehaviour
 {
-    public static Action<Item> OnPlaceItem;
-    public static Action<Item> OnRemoveItem;
+    [SerializeField] private ItemGameEvent _onPlaceItem;
+    [SerializeField] private ItemGameEvent _onRemoveItem;
 
     [field: SerializeField]
     public bool InFridge { get; private set; }
@@ -55,7 +55,7 @@ public class GridInteractor : MonoBehaviour
         
         if (InFridge)
         {
-            OnRemoveItem?.Invoke(itemOnCoordinates);
+            _onRemoveItem.Raise(itemOnCoordinates);
         }
         return removedObject;
     }
@@ -79,7 +79,7 @@ public class GridInteractor : MonoBehaviour
         
         if (InFridge)
         {
-            OnPlaceItem?.Invoke(placedObject.Item);
+            _onPlaceItem.Raise(placedObject.Item);
         }
         return true;
     }

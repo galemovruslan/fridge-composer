@@ -59,6 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78cb601c0b8db3d4a85f96e3c4a5f81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onPlaceItem: {fileID: 11400000, guid: b03d01459af976e48b3af7869e5f15c0, type: 2}
+  _onRemoveItem: {fileID: 11400000, guid: 5cde37d3eb92823489a8c4faf6a56c5b, type: 2}
+  <InFridge>k__BackingField: 0
   _gridDescription: {fileID: 11400000, guid: f923c9f3c8ef8534c8eb324bc2cca746, type: 2}
 --- !u!114 &9024846043577342918
 MonoBehaviour:
@@ -72,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6977ad75b272984fba8ac395b9c2562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onCreateItem: {fileID: 11400000, guid: 49eb84e9189d4964fafb76a29c4b7a06, type: 2}
   _grid: {fileID: 9024846043577342939}
   _itemPrefabs: []
 --- !u!114 &6297821932199891331

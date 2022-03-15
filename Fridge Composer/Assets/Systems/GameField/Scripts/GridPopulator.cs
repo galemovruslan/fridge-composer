@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class GridPopulator : MonoBehaviour
 {
-    public static event Action<Item> OnCreateItem;
 
+    [SerializeField] private ItemGameEvent _onCreateItem;
     [SerializeField] private GridInteractor _grid;
     [SerializeField] private List<PlaceableItem> _itemPrefabs;
 
@@ -28,7 +28,7 @@ public class GridPopulator : MonoBehaviour
             var variant = new OcupationVariant() { Item = item, PosiblePlaces = posiblePlaces };
             _itemOcupationVariantsSorted.Add(variant);
 
-            OnCreateItem?.Invoke(item.Item);
+            _onCreateItem.Raise(item.Item);
         }
 
         _itemOcupationVariantsSorted.Sort(
