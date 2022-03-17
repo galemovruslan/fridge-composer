@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class PlacerState
 {
@@ -43,6 +44,8 @@ public abstract class PlacerState
 
     protected void InteractWithGrid(Action<GridInteractor, Vector3> interaction)
     {
+        if (EventSystem.current.IsPointerOverGameObject()) { return; }
+
         Ray screenRay = _camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(screenRay, out var hit))
         {
