@@ -141,9 +141,13 @@ public class Grid
 
     }
 
-    public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
+    public Vector3 SnapToGrid(Vector3 freeWorldCoordinates, Item item = null)
     {
         Vector2Int itemIndex = WorldToGrid(freeWorldCoordinates);
+        if(item != null)
+        {
+            itemIndex = ShiftFromEdge(itemIndex, item);
+        }
         Vector3 worldCoords = GridToWorld(itemIndex);
         return worldCoords;
     }
@@ -158,6 +162,29 @@ public class Grid
         int row = Mathf.FloorToInt((coords.x - _offset.x) / _cellWidth);
         int col = Mathf.FloorToInt((coords.z - _offset.z) / _cellWidth);
         return new Vector2Int(row, col);
+    }
+
+    public Vector2Int ShiftFromEdge(Vector2Int rootIndex, Item item)
+    {
+        int rootRow = rootIndex.x;
+        int rootCol = rootIndex.y;
+        int itemRows = item.Sizes.x;
+        int itemCols = item.Sizes.y;
+
+        Vector2Int shift = new Vector2Int();
+
+        int rowsToEdge = _rowsNumber - (rootRow + itemRows);
+        if (rowsToEdge < 0)
+        {
+            shift.x = rowsToEdge;
+        }
+
+        int colsToEdge = _colsNumber - (rootCol + itemCols);
+        if(colsToEdge < 0)
+        {
+            shift.y = colsToEdge;
+        }
+        return rootIndex + shift;
     }
 
     private List<Vector2Int> GetOcupiedGridIndices(Vector2Int startCoordinate, Item item)

@@ -5,11 +5,17 @@ public class TimerProgress
     private float _timerValue;
     private float _presetValue;
     private event Action _onTimerEnd;
+    private event Action<float> _onTimerUpdate;
     private bool _isPaused = false;
 
     public TimerProgress( Action onTimerEnd)
     {
         _onTimerEnd += onTimerEnd;
+    }
+
+    public void SubscribeOnEvents(Action<float> onUpdateTimer)
+    {
+        _onTimerUpdate += onUpdateTimer;
     }
 
     public void Start(float presetValue)
@@ -32,7 +38,8 @@ public class TimerProgress
 
         _timerValue -= deltaTime;
 
-        if(_timerValue <= _presetValue)
+        _onTimerUpdate?.Invoke(_timerValue);
+        if (_timerValue <= _presetValue)
         {
             _onTimerEnd?.Invoke();
         }

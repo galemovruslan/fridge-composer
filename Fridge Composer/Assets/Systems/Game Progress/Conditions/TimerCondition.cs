@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,12 +17,12 @@ public class TimerCondition : Condition
 
     private void OnDisable()
     {
-        _progress = null; 
+        _progress = null;
     }
 
-    private void SatisfyCondition()
+    public void SubscribeOnEvents(Action<float> onUpdateTimer)
     {
-        ChangeStatus(this, ConditionStatus.satisfy);
+        _progress.SubscribeOnEvents(onUpdateTimer);
     }
 
     public override void StartChecking()
@@ -34,8 +35,15 @@ public class TimerCondition : Condition
         _progress.TogglePause();
     }
 
-    public override void Tick (float deltaTime)
+    public override void Tick(float deltaTime)
     {
         _progress.Tick(deltaTime);
     }
+
+    private void SatisfyCondition()
+    {
+        ChangeStatus(this, ConditionStatus.satisfy);
+    }
+
+
 }

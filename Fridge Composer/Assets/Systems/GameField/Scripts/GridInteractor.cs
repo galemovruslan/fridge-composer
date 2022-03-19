@@ -63,6 +63,7 @@ public class GridInteractor : MonoBehaviour
     public bool TryPlaceOnGrid(Vector3 worldCoordinates, PlaceableItem placedObject)
     {
         Vector2Int startIndices = _grid.WorldToGrid(worldCoordinates);
+        startIndices = _grid.ShiftFromEdge(startIndices, placedObject.Item);
         return TryPlaceOnGrid(startIndices, placedObject);
     }
 
@@ -87,6 +88,11 @@ public class GridInteractor : MonoBehaviour
     public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
     {
         return _grid.SnapToGrid(freeWorldCoordinates);
+    }
+
+    public Vector3 SnapToGrid(Vector3 freeWorldCoordinates, Item item)
+    {
+        return _grid.SnapToGrid(freeWorldCoordinates, item);
     }
 
     public List<Vector2Int> GetGridIndices()

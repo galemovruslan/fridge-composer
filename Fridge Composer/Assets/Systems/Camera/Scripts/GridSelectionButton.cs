@@ -15,7 +15,7 @@ public class GridSelectionButton : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _text = GetComponentInChildren<Text>();
-        transform.parent = FindObjectOfType<NavigationButtonsParent>().transform;
+        transform.parent = FindObjectOfType<NavigationButtonsSpawner>().transform;
     }
 
     public void Initialize(string name)

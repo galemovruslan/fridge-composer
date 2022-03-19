@@ -37,8 +37,8 @@ public abstract class PlacerState
 
         InteractWithGrid((grid, worldCoordinates) =>
         {
-            Vector3 snapedCoordinates = grid.SnapToGrid(worldCoordinates);
-            _currentItem.transform.position = snapedCoordinates;
+            Vector3 snapedCoordinates = grid.SnapToGrid(worldCoordinates, _currentItem.Item);
+            _currentItem.MoveTo(snapedCoordinates);
         });
     }
 
