@@ -28,10 +28,10 @@ public class PlaceableItem : MonoBehaviour
         _item.SwapOrientation();
 
         float newOrientation = _isHorizontal ? -90f : 90f;
-        _visuals.transform.Rotate(new Vector3(0, newOrientation, 0));
+        _visuals.transform.Rotate(new Vector3(0, newOrientation, 0), Space.World);
 
-        float newTranslation = _isHorizontal ? 1f : -1f;
-        _visuals.transform.Translate(new Vector3(_description.ColNum*newTranslation, 0, 0), Space.World);
+        Vector3 newTranslation = _isHorizontal ? new Vector3(0, 0, -_item.Sizes.x) : new Vector3(-_item.Sizes.y, 0,0);
+        _visuals.transform.Translate(newTranslation, Space.Self);
 
         _isHorizontal = !_isHorizontal;
     }

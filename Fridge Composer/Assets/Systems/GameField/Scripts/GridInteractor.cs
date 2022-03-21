@@ -28,8 +28,7 @@ public class GridInteractor : MonoBehaviour
         _cols = _gridDescription.Cols;
         _width = _gridDescription.Width;
 
-        Vector3 offset = transform.position - 
-            new Vector3(_rows/2.0f * _width, 0, _cols/2.0f * _width);
+        Vector3 offset =  new Vector3(-_rows / 2.0f * _width, 0, -_cols / 2.0f * _width);
 
         _grid = new Grid(_rows, _cols, _width, offset, _gridDescription.GetDescription);
         _collider = GetComponent<BoxCollider>();
@@ -43,7 +42,8 @@ public class GridInteractor : MonoBehaviour
 
     public PlaceableItem RemoveFromGrid(Vector3 worldCoordinates)
     {
-        Item itemOnCoordinates = _grid.GetContent(worldCoordinates);
+        Vector3 localCoordinates = ConvertToLocal(worldCoordinates);
+        Item itemOnCoordinates = _grid.GetContent(localCoordinates);
 
         if (itemOnCoordinates == null)
         {
@@ -62,7 +62,8 @@ public class GridInteractor : MonoBehaviour
 
     public bool TryPlaceOnGrid(Vector3 worldCoordinates, PlaceableItem placedObject)
     {
-        Vector2Int startIndices = _grid.WorldToGrid(worldCoordinates);
+        Vector3 localCoordinates = ConvertToLocal(worldCoordinates);
+        Vector2Int startIndices = _grid.WorldToGrid(localCoordinates);
         startIndices = _grid.ShiftFromEdge(startIndices, placedObject.Item);
         return TryPlaceOnGrid(startIndices, placedObject);
     }
@@ -74,7 +75,8 @@ public class GridInteractor : MonoBehaviour
             return false;
         }
 
-        placedObject.transform.position = _grid.GridToWorld(indices);
+        placedObject.transform.position = ConvertToWorld(_grid.GridToWorld(indices));
+        placedObject.transform.localRotation = transform.localRotation;
         _grid.PlaceContentInCells(indices, placedObject.Item);
         RegisterObjectOnGrid(placedObject.Item, placedObject);
         
@@ -87,12 +89,15 @@ public class GridInteractor : MonoBehaviour
 
     public Vector3 SnapToGrid(Vector3 freeWorldCoordinates)
     {
-        return _grid.SnapToGrid(freeWorldCoordinates);
+        Vector3 localCoordinates = ConvertToLocal(freeWorldCoordinates);
+        return ConvertToWorld(_grid.SnapToGrid(localCoordinates));
     }
 
     public Vector3 SnapToGrid(Vector3 freeWorldCoordinates, Item item)
     {
-        return _grid.SnapToGrid(freeWorldCoordinates, item);
+        Vector3 localCoordinates = ConvertToLocal(freeWorldCoordinates);
+        Vector3 snapedLocal =_grid.SnapToGrid(localCoordinates, item);
+        return ConvertToWorld(snapedLocal);
     }
 
     public List<Vector2Int> GetGridIndices()
@@ -144,64 +149,23 @@ public class GridInteractor : MonoBehaviour
 
                 Vector2Int cellIndices = new Vector2Int(row, cols);
                 Vector3 spawnCoordinates = _grid.GridToWorld(cellIndices);
-                GameObject cellVisual = Instantiate(cellDescription.Visual.gameObject, spawnCoordinates, Quaternion.identity, transform);
+                spawnCoordinates = ConvertToWorld(spawnCoordinates);
+                GameObject cellVisual = Instantiate(cellDescription.Visual.gameObject, spawnCoordinates, transform.rotation, transform);
                 _cellObjects.Add(cellIndices, cellVisual);
             }
         }
     }
-
-    private void DrawGridDebug()
-    {
-        if (transform.childCount > 0)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
-        }
-        for (int row = 0; row < _rows; row++)
-        {
-            for (int col = 0; col < _cols; col++)
-            {
-                Vector2Int startCell = new Vector2Int(row, col);
-
-                Vector2Int endCellHorizontal = new Vector2Int(row, col + 1);
-                Vector3 startPoint = _grid.GridToWorld(startCell);
-                Vector3 endPointHorizontal = _grid.GridToWorld(endCellHorizontal);
-                Debug.DrawLine(startPoint, endPointHorizontal, Color.white, 999);
-
-                Vector2Int endCellVertical = new Vector2Int(row + 1, col);
-                Vector3 endPointVertical = _grid.GridToWorld(endCellVertical);
-                Debug.DrawLine(startPoint, endPointVertical, Color.white, 999);
-
-                Vector3 textOffset = new Vector3(_width / 2.0f, 0f, _width / 2.0f);
-                Vector3 textPosition = transform.InverseTransformPoint(startPoint) + textOffset;
-
-                var item = _grid.GetContent(new Vector2Int(row, col));
-                string cellText = item == null ? "null" : "1";
-
-                Utils.CreateWorldText(cellText,
-                    parent: transform,
-                    localPosition: textPosition,
-                    fontSize: 5,
-                    color: Color.white);
-
-            }
-        }
-        Debug.DrawLine(_grid.GridToWorld(new Vector2Int(0, _cols)), _grid.GridToWorld(new Vector2Int(_rows, _cols)), Color.white, 999);
-        Debug.DrawLine(_grid.GridToWorld(new Vector2Int(_rows, 0)), _grid.GridToWorld(new Vector2Int(_rows, _cols)), Color.white, 999);
-
-    }
-
+    
     private void FitCollider(int rows, int cols, int cellWidth, Vector3 offset)
     {
         float xSize = cellWidth * rows;
         float zSize = cellWidth * cols;
 
-        float gridCenterX = xSize / 2;
-        float gridCenterZ = zSize / 2;
         _collider.center = new Vector3(0, 0, 0);
         _collider.size = new Vector3(xSize, _collider.size.y, zSize);
     }
 
+    private Vector3 ConvertToLocal(Vector3 worldCoordinates) => transform.InverseTransformPoint(worldCoordinates);
+
+    private Vector3 ConvertToWorld(Vector3 localCordinates) => transform.TransformPoint(localCordinates);
 }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2498ad330114de34ba6c96753e7397d8, type: 3}
+  m_Name: 15x10 Table
+  m_EditorClassIdentifier: 
+  _rows: 15
+  _cols: 10
+  _width: 1
+  _baseSurface: {fileID: 11400000, guid: 4181db6c061909144a62ac4f688d31b1, type: 2}
+  _alternativeSurfaces: []
