@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9eba0ab485d9464885782b0132bf254, type: 3}
+  m_Name: 2x2 Deep pan Cold
+  m_EditorClassIdentifier: 
+  _attributes:
+  - {fileID: 11400000, guid: 65a5f32b41c2bf143a6e0221ae7992ae, type: 2}
+  - {fileID: 11400000, guid: 1aa35aabffda9ef42b476c94ca854c1c, type: 2}
+  _rowNum: 2
+  _colNum: 2
+  _visuals: {fileID: 7140478761890460410, guid: 7d2031dc9a539874da22959af4f3f986, type: 3}
