@@ -28,7 +28,7 @@ public class GridInteractor : MonoBehaviour
         _cols = _gridDescription.Cols;
         _width = _gridDescription.Width;
 
-        Vector3 offset =  new Vector3(-_rows / 2.0f * _width, 0, -_cols / 2.0f * _width);
+        Vector3 offset = new Vector3(-_rows / 2.0f * _width, 0, -_cols / 2.0f * _width);
 
         _grid = new Grid(_rows, _cols, _width, offset, _gridDescription.GetDescription);
         _collider = GetComponent<BoxCollider>();
@@ -52,7 +52,7 @@ public class GridInteractor : MonoBehaviour
 
         _grid.ClearContentWithItem(itemOnCoordinates);
         PlaceableItem removedObject = UnregisterObjectOnGrid(itemOnCoordinates);
-        
+
         if (InFridge)
         {
             _onRemoveItem.Raise(itemOnCoordinates);
@@ -75,11 +75,11 @@ public class GridInteractor : MonoBehaviour
             return false;
         }
 
-        placedObject.transform.position = ConvertToWorld(_grid.GridToWorld(indices));
-        placedObject.transform.localRotation = transform.localRotation;
+        placedObject.MoveTo(ConvertToWorld(_grid.GridToWorld(indices)));
+        placedObject.AllignTo(transform.localRotation);
         _grid.PlaceContentInCells(indices, placedObject.Item);
         RegisterObjectOnGrid(placedObject.Item, placedObject);
-        
+
         if (InFridge)
         {
             _onPlaceItem.Raise(placedObject.Item);
@@ -96,7 +96,7 @@ public class GridInteractor : MonoBehaviour
     public Vector3 SnapToGrid(Vector3 freeWorldCoordinates, Item item)
     {
         Vector3 localCoordinates = ConvertToLocal(freeWorldCoordinates);
-        Vector3 snapedLocal =_grid.SnapToGrid(localCoordinates, item);
+        Vector3 snapedLocal = _grid.SnapToGrid(localCoordinates, item);
         return ConvertToWorld(snapedLocal);
     }
 
@@ -155,7 +155,7 @@ public class GridInteractor : MonoBehaviour
             }
         }
     }
-    
+
     private void FitCollider(int rows, int cols, int cellWidth, Vector3 offset)
     {
         float xSize = cellWidth * rows;

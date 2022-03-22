@@ -41,4 +41,9 @@ public class PlaceableItem : MonoBehaviour
         transform.position = newPosition;
     }
 
+    public void AllignTo(Quaternion rotaion)
+    {
+        transform.localRotation = rotaion;
+    }
+
 }
