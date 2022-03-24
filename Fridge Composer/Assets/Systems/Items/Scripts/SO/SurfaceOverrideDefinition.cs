@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Descriptions/Surface Override", fileName = "New Surface Override")]
+
 public class SurfaceOverrideDefinition : ScriptableObject
 {
     [SerializeField] private SurfaceAttribute _from;

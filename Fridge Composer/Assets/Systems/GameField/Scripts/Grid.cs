@@ -88,7 +88,18 @@ public class Grid
 
     public Item GetContent(Vector2Int gridIdx)
     {
-        return _cells[gridIdx.x, gridIdx.y].GetContent();
+        Item content = _cells[gridIdx.x, gridIdx.y].GetContent();
+        
+        if(content == null)
+        {
+            return null;
+        }
+
+        if (content.isStackable && CheckStacked(content))
+        {
+            return null;
+        }
+        return content;
     }
 
     public Item GetContent(Vector3 worldCoords)
@@ -207,5 +218,20 @@ public class Grid
         }
         return ocupiedCoortinates;
     }
+
+
+    private bool CheckStacked(Item content)
+    {
+        List<Vector2Int> ocupiedGridIndices = _gridIndicesMap[content];
+        foreach (var index in ocupiedGridIndices)
+        {
+            if (!_cells[index.x, index.y].HasSingleItem)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

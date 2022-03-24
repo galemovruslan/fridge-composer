@@ -5,10 +5,11 @@ using UnityEngine;
 public class Cell
 {
     public SurfaceDescription SurfaceDescrption => _surfaceDescrption;
+    public bool HasSingleItem => _content.Count <= 1;
 
     private SurfaceDescription _surfaceDescrption;
     private SurfaceDescription _originalSurfaceDescrption;
-    private Item _content;
+    private Stack<Item> _content = new Stack<Item>(2);
 
     public Cell(SurfaceDescription description)
     {
@@ -18,29 +19,30 @@ public class Cell
 
     public void PlaceContent(Item cellContent)
     {
-        _content = cellContent;
-        if (_content.HasOverride)
+        _content.Push(cellContent);
+        if (_content.Peek().HasOverride)
         {
-            _surfaceDescrption = _content.OverrideDescription(_surfaceDescrption);
+            _surfaceDescrption = _content.Peek().OverrideDescription(_surfaceDescrption);
         }
     }
 
     public Item GetContent()
     {
-        return _content;
+        return _content.Count == 0 ? null : _content.Peek();
     }
 
     public void RemoveContent()
     {
-        if (_content.HasOverride)
+        if (_content.Peek().HasOverride)
         {
             _surfaceDescrption = _originalSurfaceDescrption;
         }
-        _content = null;
+        _content.Pop();
     }
 
     public bool CanPlaceHere(Item content)
     {
-        return _content == null && !content.CheckForbidenAttributes(_surfaceDescrption);
+        return (_content.Count == 0 || _content.Peek().isStackable && !content.isStackable) 
+            && !content.CheckForbidenAttributes(_surfaceDescrption);
     }
 }

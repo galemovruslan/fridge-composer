@@ -15,6 +15,9 @@ MonoBehaviour:
   _attributes:
   - {fileID: 11400000, guid: 9cb8ad81657741e4dbeb671ffa3ef19d, type: 2}
   - {fileID: 11400000, guid: 65a5f32b41c2bf143a6e0221ae7992ae, type: 2}
+  _overrideSurfaceAttributes:
+  - {fileID: 11400000, guid: b0be0d5141039144da120da91da9d4e8, type: 2}
+  _isStackable: 1
   _rowNum: 4
   _colNum: 2
   _visuals: {fileID: 7898314084993075973, guid: 53d70f4535b97064796f204482c3b469, type: 3}

@@ -12,11 +12,14 @@ public class ItemDesciption : ScriptableObject
     public GameObject Visuals => _visuals;
 
     public IEnumerable<SurfaceOverrideDefinition> OverrideDescription => _overrideSurfaceAttributes;
-    
+
+    public bool IsStackable => _isStackable; 
 
     [SerializeField] private List<ItemAttribute> _attributes;
 
     [SerializeField] private List<SurfaceOverrideDefinition> _overrideSurfaceAttributes;
+
+    [SerializeField] private bool _isStackable;
 
     [Min(1)]
     [SerializeField] private int _rowNum = 1;

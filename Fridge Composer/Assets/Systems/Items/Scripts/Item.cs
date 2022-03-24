@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Item
 {
+    public bool isStackable => _description.IsStackable;
     public bool HasOverride => _description.HasOverride;
     public bool IsSymetrical => _sizes.x == _sizes.y;
     public Vector2Int Sizes => _sizes;
@@ -61,5 +62,5 @@ public class Item
         return foundForbiden;
     }
 
-
+    
 }
