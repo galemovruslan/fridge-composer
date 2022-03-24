@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Item
 {
+    public bool HasOverride => _description.HasOverride;
     public bool IsSymetrical => _sizes.x == _sizes.y;
     public Vector2Int Sizes => _sizes;
     public GameObject Visuals => _description.Visuals;
@@ -27,6 +29,20 @@ public class Item
         _sizes.y = temp;
     }
 
+    public SurfaceDescription OverrideDescription(SurfaceDescription surfaceDescrption)
+    {
+        SurfaceDescription newSurface = SurfaceDescription.Instantiate(surfaceDescrption);
+        foreach (SurfaceOverrideDefinition overrideDescription in _description.OverrideDescription)
+        {
+            if (newSurface.ContainsAttribute(overrideDescription.From))
+            {
+                newSurface.ReplaceAttribute(overrideDescription.From, overrideDescription.To);
+            }
+
+        }
+        return newSurface;
+    }
+
     public bool CheckForbidenAttributes(SurfaceDescription surfaceDescription)
     {
         bool foundForbiden = false;
@@ -44,5 +60,6 @@ public class Item
         }
         return foundForbiden;
     }
+
 
 }
