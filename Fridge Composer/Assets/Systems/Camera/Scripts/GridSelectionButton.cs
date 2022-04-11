@@ -15,13 +15,17 @@ public class GridSelectionButton : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _text = GetComponentInChildren<Text>();
-        transform.parent = FindObjectOfType<NavigationButtonsSpawner>().transform;
     }
 
     public void Initialize(string name)
     {
         gameObject.name = name;
         _text.text = name;
+    }
+
+    public void AssignParent(Transform parent)
+    {
+        transform.parent = parent;
     }
 
     public void AddListener(UnityAction action)

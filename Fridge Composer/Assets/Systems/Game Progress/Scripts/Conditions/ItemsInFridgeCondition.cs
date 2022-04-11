@@ -29,9 +29,9 @@ public class ItemsInFridgeCondition : Condition
 
     public override void StartChecking(){}
 
-    public override void PauseChecking()
+    public override void PauseChecking(bool isPaused)
     {
-        _progress.TogglePause();
+        _progress.TogglePause(isPaused);
     }
 
     public override void Tick(float deltaTime){}

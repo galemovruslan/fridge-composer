@@ -30,9 +30,9 @@ public class TimerCondition : Condition
         _progress.Start(_presetValue);
     }
 
-    public override void PauseChecking()
+    public override void PauseChecking(bool isPaused)
     {
-        _progress.TogglePause();
+        _progress.TogglePause(isPaused);
     }
 
     public override void Tick(float deltaTime)

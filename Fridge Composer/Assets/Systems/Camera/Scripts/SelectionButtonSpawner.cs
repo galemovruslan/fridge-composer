@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CameraRig))]
 public class SelectionButtonSpawner : MonoBehaviour
-{
+{/*
     [SerializeField] private GridSelectionButton _buttonPrefab;
 
     private CameraRig _rig;
@@ -17,5 +17,5 @@ public class SelectionButtonSpawner : MonoBehaviour
         _selectionButton.Initialize(_rig.gameObject.name);
         _selectionButton.AddListener(_rig.SelectionHandle);
 
-    }
+    }*/
 }

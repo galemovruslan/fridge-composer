@@ -8,22 +8,30 @@ public class NavigationButtonsSpawner : MonoBehaviour
     [SerializeField] private GridSelectionButton _buttonPrefab;
     [SerializeField] private GameObjectRuntimeSet _rigs;
 
-    private GridSelectionButton _selectionButton;
-
     private void Start()
     {
         Spawn();
-
     }
 
     private void Spawn()
     {
+        GridSelectionButton selectionButton;
+        List<OrderedButtons> spawnedButtons = new List<OrderedButtons>();
         foreach (var rigGO in _rigs.GetObjects())
         {
             CameraRig rig = rigGO.GetComponent<CameraRig>();
-            _selectionButton = Instantiate(_buttonPrefab);
-            _selectionButton.Initialize(rig.gameObject.name);
-            _selectionButton.AddListener(rig.SelectionHandle);
+            selectionButton = Instantiate(_buttonPrefab);
+            selectionButton.Initialize(rig.gameObject.name);
+            selectionButton.AddListener(rig.SelectionHandle);
+            spawnedButtons.Add(new OrderedButtons { button = selectionButton, order = rig.Order });
         }
+        spawnedButtons.Sort((x, y) => x.order.CompareTo(y.order));
+        spawnedButtons.ForEach(btn => btn.button.AssignParent(transform));
+    }
+
+    struct OrderedButtons
+    {
+        public GridSelectionButton button;
+        public int order;
     }
 }

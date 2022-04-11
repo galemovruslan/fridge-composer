@@ -11,9 +11,9 @@ public class FillProgress
     private event Action _onComplete;
     private bool _isPaused = false;
 
-    public void TogglePause()
+    public void TogglePause(bool isPaused)
     {
-        _isPaused = !_isPaused;
+        _isPaused = isPaused;
     }
 
     public void HandlePlaceItem(Item placedItem)

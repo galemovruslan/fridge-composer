@@ -6,15 +6,11 @@ using UnityEngine;
 public class ItemInteractor : MonoBehaviour
 {
 
-    [SerializeField] private PlaceableItem _currentItemPrefab;
-
     private PlacerStateMachine _stateMachine;
     private PlaceableItem _currentItem;
 
     private void Awake()
     {
-        //_currentItem = Instantiate(_currentItemPrefab);
-
         _stateMachine = new PlacerStateMachine();
         var startState = new PickState(_stateMachine, _currentItem);
         _stateMachine.ChangeState(startState);

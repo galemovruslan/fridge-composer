@@ -27,9 +27,9 @@ public class ConditionSet : ScriptableObject
         _conditions.ForEach( (condition) => { condition.StartChecking(); } );
     }
 
-    public void PauseConditions()
+    public void PauseConditions(bool isPaused)
     {
-        _conditions.ForEach((condition) => { condition.PauseChecking(); });
+        _conditions.ForEach((condition) => { condition.PauseChecking(isPaused); });
     }
 
     public void Tick(float deltaTime)

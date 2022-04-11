@@ -8,8 +8,10 @@ public class CameraRig : MonoBehaviour
 {
     public event Action<CameraRig> OnSelect;
 
-    [SerializeField] private CinemachineVirtualCamera _rigCamera;
+    [field:SerializeField]
+    public int Order { get; private set; }
 
+    [SerializeField] private CinemachineVirtualCamera _rigCamera;
 
     public void SelectionHandle()
     {

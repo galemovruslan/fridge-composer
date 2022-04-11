@@ -24,9 +24,9 @@ public class TimerProgress
         _presetValue = 0f;
     }
 
-    public void TogglePause()
+    public void TogglePause(bool isPaused)
     {
-        _isPaused = !_isPaused;
+        _isPaused = isPaused;
     }
 
     public void Tick(float deltaTime)
