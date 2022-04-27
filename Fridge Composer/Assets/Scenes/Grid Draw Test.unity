@@ -382,7 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winConditions: {fileID: 11400000, guid: d8dd96d6a705e7343ad80fd32d35e699, type: 2}
   _loseConditions: {fileID: 11400000, guid: 966407481f8c5924a8a711dfbe887e42, type: 2}
-  _onPause: {fileID: 0}
+  _onPause: {fileID: 11400000, guid: 5d0ec2da11bf045469feca3379b6841e, type: 2}
 --- !u!1 &661987641
 GameObject:
   m_ObjectHideFlags: 0
