@@ -12,18 +12,31 @@ public class AvailablePlaceFinder
         _grid = gridInteractor;
     }
 
-    public List<Vector2Int> GetAvailablePlaceIndices(PlaceableItem item)
+    public List<Vector2Int> GetAvailablePlaceIndices(Item item)
     {
-        var posiblePlaces = _grid.PosiblePlaceIndices(item.Item);
-        if (!item.Item.IsSymetrical)
+        List<Vector2Int> posiblePlaces = _grid.PosiblePlaceIndices(item);
+        if (!item.IsSymetrical)
         {
             item.SwapOrientation();
-            var posiblePlacesAlternative = _grid.PosiblePlaceIndices(item.Item);
+            List<Vector2Int> posiblePlacesAlternative = _grid.PosiblePlaceIndices(item);
             item.SwapOrientation();
             posiblePlaces = posiblePlaces.Union<Vector2Int>(posiblePlacesAlternative).ToList();
         }
 
         return posiblePlaces;
+    }
+
+    public List<List<Vector2Int>> GetPosibleOcupations(Item item)
+    {
+        var posibleOcupations = new List<List<Vector2Int>>();
+        List<Vector2Int> startingList = GetAvailablePlaceIndices(item);
+        foreach (var start in startingList)
+        {
+            List<Vector2Int> itemOcupations = _grid.GetOcupiedIndices(start, item);
+            posibleOcupations.Add(itemOcupations);
+        }
+        // работает только для оригинальной ориентации предмета
+        return posibleOcupations;
     }
 
 }

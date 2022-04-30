@@ -25,18 +25,27 @@ public class LevelPopulator : MonoBehaviour
 
     private void Start()
     {
+        //_placeFinder = new AvailablePlaceFinder();
+        PopulateLevel();
+    }
+
+    private void PopulateLevel()
+    {
         // ƒл€ каждой сетки
         foreach (var gridObject in _gridSet.GetObjects())
         {
             // найти попул€тор
-            if(gridObject.TryGetComponent<GridPopulator>(out var populator))
+            if (gridObject.TryGetComponent<GridPopulator>(out var populator))
             {
-                // если сетка в холодильнике то 
+                if (!populator.InFridge)
+                {
+                    continue;
+                }
+                // если сетка в холодильнике то подбираем список возможных предметов дл€ установки
 
-                    // 
+                // 
             }
         }
-        //_placeFinder = new AvailablePlaceFinder();
     }
 
     /*

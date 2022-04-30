@@ -198,7 +198,7 @@ public class Grid
         return rootIndex + shift;
     }
 
-    private List<Vector2Int> GetOcupiedGridIndices(Vector2Int startCoordinate, Item item)
+    public List<Vector2Int> GetOcupiedGridIndices(Vector2Int startCoordinate, Item item)
     {
         List<Vector2Int> ocupiedCoortinates = new List<Vector2Int>();
 

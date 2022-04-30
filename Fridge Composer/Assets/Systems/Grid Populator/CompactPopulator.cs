@@ -22,7 +22,7 @@ public class CompactPopulator : IGridPopulator
         {
             PlaceableItem item = GameObject.Instantiate(itemPrefab);
 
-            List<Vector2Int> posiblePlaces = _placeFinder.GetAvailablePlaceIndices(item);
+            List<Vector2Int> posiblePlaces = _placeFinder.GetAvailablePlaceIndices(item.Item);
             var variant = new OcupationVariant() { Item = item, PosiblePlaces = posiblePlaces };
             itemOcupationVariantsSorted.Add(variant);
 

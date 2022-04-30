@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GridInteractor : MonoBehaviour
 {
+    public GridDescription GridDescription  => _gridDescription; 
+
     [SerializeField] private ItemGameEvent _onPlaceItem;
     [SerializeField] private ItemGameEvent _onRemoveItem;
 
@@ -125,6 +127,11 @@ public class GridInteractor : MonoBehaviour
             }
         }
         return availablePlaces;
+    }
+
+    public List<Vector2Int> GetOcupiedIndices(Vector2Int startIndex, Item item)
+    {
+        return _grid.GetOcupiedGridIndices(startIndex, item);
     }
 
     private void RegisterObjectOnGrid(Item item, PlaceableItem spawnedGameObject)
