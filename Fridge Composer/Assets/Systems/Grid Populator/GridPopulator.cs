@@ -10,28 +10,20 @@ public class GridPopulator : MonoBehaviour
 
     [SerializeField] private ItemGameEvent _onCreateItem;
     [SerializeField] private GridInteractor _grid;
-    [SerializeField] private List<PlaceableItem> _itemPrefabs;
+    [SerializeField] private ItemSpawner _spawner;
 
-    private AvailablePlaceFinder _placeFinder;
     private IGridPopulator _populator;
+    private List<PlaceableItem> _placedItems;
 
     private void Awake()
     {
-        _placeFinder = new AvailablePlaceFinder(_grid);
-        _populator = new CompactPopulator(_grid, _placeFinder);
+        _populator = new IterativePopulator(_grid, _spawner);
     }
 
-
-    private void Start()
+    public void PopulateGrid(List<ItemDesciption> itemDesciptions) // TODO заменить аргумент на коллекцию ItemDescription
     {
-        PopulateGrid(_itemPrefabs);
-    }
-
-
-    public void PopulateGrid(List<PlaceableItem> itemPrefabs)
-    {
-        List<PlaceableItem> spawnedItems =_populator.PopulateGrid(itemPrefabs);
-        spawnedItems.ForEach(item => _onCreateItem.Raise(item.Item));
+        _placedItems = _populator.PopulateGrid(itemDesciptions);
+        _placedItems.ForEach(item => _onCreateItem.Raise(item.Item));
 
     }
 

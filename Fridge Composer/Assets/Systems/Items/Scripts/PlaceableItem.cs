@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlaceableItem : MonoBehaviour
 {
     public Item Item => _item;
+    public ItemDesciption Description => _description; 
 
     [SerializeField] private ItemDesciption _description;
 

@@ -12,6 +12,7 @@ public class AvailablePlaceFinder
         _grid = gridInteractor;
     }
 
+    // возможные точки размещения исходя из аттрибутов
     public List<Vector2Int> GetAvailablePlaceIndices(Item item)
     {
         List<Vector2Int> posiblePlaces = _grid.PosiblePlaceIndices(item);
@@ -25,18 +26,23 @@ public class AvailablePlaceFinder
 
         return posiblePlaces;
     }
-
-    public List<List<Vector2Int>> GetPosibleOcupations(Item item)
+    // для каждой стартовой точки собираются все занимаемые точки
+    public Dictionary<Vector2Int, List<Vector2Int>> GetPosibleOcupations(Item item, List<Vector2Int> startingList)
     {
-        var posibleOcupations = new List<List<Vector2Int>>();
-        List<Vector2Int> startingList = GetAvailablePlaceIndices(item);
+        var posibleOcupations = new Dictionary<Vector2Int, List<Vector2Int>>();
         foreach (var start in startingList)
         {
             List<Vector2Int> itemOcupations = _grid.GetOcupiedIndices(start, item);
-            posibleOcupations.Add(itemOcupations);
+            posibleOcupations.Add(start, itemOcupations);
         }
-        // работает только для оригинальной ориентации предмета
         return posibleOcupations;
     }
+
+}
+
+public struct PosibleOcupations
+{
+    public Item Item;
+    public List<Vector2Int> startPoints;
 
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CompactPopulator : IGridPopulator
+public class CompactPopulator// : IGridPopulator
 {
     private GridInteractor _grid;
     private AvailablePlaceFinder _placeFinder;

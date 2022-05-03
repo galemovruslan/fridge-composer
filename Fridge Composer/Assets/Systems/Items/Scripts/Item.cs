@@ -9,6 +9,7 @@ public class Item
     public bool IsSymetrical => _sizes.x == _sizes.y;
     public Vector2Int Sizes => _sizes;
     public GameObject Visuals => _description.Visuals;
+    public ItemDesciption Description => _description;
 
     private ItemDesciption _description;
     private Vector2Int _sizes;

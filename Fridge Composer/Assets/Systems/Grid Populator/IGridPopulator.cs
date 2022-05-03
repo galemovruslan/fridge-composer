@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public interface IGridPopulator
 {
-    List<PlaceableItem> PopulateGrid(List<PlaceableItem> itemsToPlace);
+    List<PlaceableItem> PopulateGrid(List<ItemDesciption> itemsToPlace);
 
 
 }
