@@ -7,15 +7,15 @@ public class LevelPopulator : MonoBehaviour
 {
     private const string _spawnParentName = "Items";
 
-    [SerializeField] private float _fillRatio = 1f;
+    [SerializeField] private float _fillRatio = 0.95f;
+    [SerializeField] private float _leaveRatio = 0.5f;
     [SerializeField] private GameObjectRuntimeSet _gridSet;
+    [SerializeField] private List<ItemDesciption> _itemPool;
 
-    private AvailablePlaceFinder _placeFinder;
     private Transform _spawnParent;
     private List<GridPopulator> _fridgePopulators = new List<GridPopulator>();
-    private List<GridPopulator> _outerPopulators = new List<GridPopulator>();
-
-
+    private List<PlaceableItem> _spawnedItems = new List<PlaceableItem>();
+    private List<GridInteractor> _outerGrids = new List<GridInteractor>();
 
     private void Awake()
     {
@@ -29,7 +29,6 @@ public class LevelPopulator : MonoBehaviour
 
     private void Start()
     {
-        //_placeFinder = new AvailablePlaceFinder();
         PopulateLevel();
     }
 
@@ -42,14 +41,15 @@ public class LevelPopulator : MonoBehaviour
 
     private void FillOutSurfaces()
     {
-        throw new NotImplementedException();
+        ItemReplacer replacer = new ItemReplacer();
+        replacer.Replace(_outerGrids, _spawnedItems, 0.25f);
     }
 
     private void FillFridge()
     {
         foreach (var populator in _fridgePopulators)
         {
-           
+            _spawnedItems.AddRange(populator.PopulateGrid(_itemPool, _fillRatio));
         }
     }
 
@@ -67,7 +67,7 @@ public class LevelPopulator : MonoBehaviour
                 }
                 else
                 {
-                    _outerPopulators.Add(populator);
+                    _outerGrids.Add(gridObject.GetComponent<GridInteractor>());
                 }
             }
         }

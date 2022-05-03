@@ -12,12 +12,12 @@ public class IterativePopulator : IGridPopulator
     public IterativePopulator(GridInteractor grid, ItemSpawner spawner)
     {
         _grid = grid;
-        _composer = new ItemComposer(_grid);
         _spawner = spawner;
     }
 
-    public List<PlaceableItem> PopulateGrid(List<ItemDesciption> itemsToPlace)
+    public List<PlaceableItem> PopulateGrid(List<ItemDesciption> itemsToPlace, float fillRatio)
     {
+        _composer = new ItemComposer(_grid, fillRatio);
         List<Item> itemsModels = itemsToPlace.Select(description => new Item(description)).ToList();
 
         List<ItemComposer.PlacementDescription> itemsToSpawn = _composer.Compose(itemsModels);

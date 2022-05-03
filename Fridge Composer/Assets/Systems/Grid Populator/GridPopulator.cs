@@ -20,11 +20,11 @@ public class GridPopulator : MonoBehaviour
         _populator = new IterativePopulator(_grid, _spawner);
     }
 
-    public void PopulateGrid(List<ItemDesciption> itemDesciptions) // TODO заменить аргумент на коллекцию ItemDescription
+    public List<PlaceableItem> PopulateGrid(List<ItemDesciption> itemDesciptions, float fillRatio) // TODO заменить аргумент на коллекцию ItemDescription
     {
-        _placedItems = _populator.PopulateGrid(itemDesciptions);
+        _placedItems = _populator.PopulateGrid(itemDesciptions, fillRatio);
         _placedItems.ForEach(item => _onCreateItem.Raise(item.Item));
-
+        return _placedItems;
     }
 
 }

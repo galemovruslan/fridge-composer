@@ -7,10 +7,10 @@ public class CompactPopulator// : IGridPopulator
     private GridInteractor _grid;
     private AvailablePlaceFinder _placeFinder;
 
-    public CompactPopulator(GridInteractor grid, AvailablePlaceFinder placeFinder)
+    public CompactPopulator(GridInteractor grid)
     {
         _grid = grid;
-        _placeFinder = placeFinder;
+        _placeFinder = new AvailablePlaceFinder(_grid);
     }
 
     public List<PlaceableItem> PopulateGrid(List<PlaceableItem> itemsToPlace)
