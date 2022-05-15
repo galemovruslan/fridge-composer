@@ -4,9 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField] private Button _continueButton;
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _quitButton;
 
+
+    private PauseSwitcher _switcher;
 
     private void OnEnable()
     {
@@ -18,16 +21,20 @@ public class Menu : MonoBehaviour
     {
         _quitButton.onClick.RemoveAllListeners();
         _restartButton.onClick.RemoveAllListeners();
+        _continueButton.onClick.RemoveAllListeners();
     }
 
-    public void Show()
+    public void Show( PauseSwitcher pauseSwitcher)
     {
+        _switcher = pauseSwitcher;
+        _continueButton.onClick.AddListener(() => _switcher.ResetPause());
         gameObject.SetActive(true);
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
+        _continueButton.onClick.RemoveAllListeners();
     }
 
 }

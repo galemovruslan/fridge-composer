@@ -8,6 +8,7 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
     [SerializeField] private ConditionSet _winConditions;
     [SerializeField] private ConditionSet _loseConditions;
     [SerializeField] private BoolGameEvent _onPause;
+    [SerializeField] private BoolGameEvent _onLevelPopulated;
     private void OnEnable()
     {
         _winConditions.AddListener(HandleWin);
@@ -56,5 +57,10 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
     {
         _winConditions.PauseConditions(isPaused);
         _loseConditions.PauseConditions(isPaused);
+    }
+
+    private void HandleLevelPopulated(bool isPopulated)
+    {
+
     }
 }
