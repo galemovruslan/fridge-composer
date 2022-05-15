@@ -11,6 +11,7 @@ public class LevelPopulator : MonoBehaviour
     [SerializeField] private float _leaveRatio = 0.5f;
     [SerializeField] private GameObjectRuntimeSet _gridSet;
     [SerializeField] private List<ItemDesciption> _itemPool;
+    [SerializeField] private BoolGameEvent _onLevelPopulated;
 
     private Transform _spawnParent;
     private List<GridPopulator> _fridgePopulators = new List<GridPopulator>();
@@ -37,6 +38,8 @@ public class LevelPopulator : MonoBehaviour
         UnpackPopulators();
         FillFridge();
         FillOutSurfaces();
+
+        _onLevelPopulated.Raise(true);
     }
 
     private void FillOutSurfaces()

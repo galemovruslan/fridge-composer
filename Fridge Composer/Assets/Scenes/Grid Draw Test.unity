@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseSwitch: {fileID: 11400000, guid: 5d0ec2da11bf045469feca3379b6841e, type: 2}
+  _onGameOver: {fileID: 11400000, guid: b26d28b51996ff641b4104a69fac42b9, type: 2}
   _pauseMenu: {fileID: 453951151}
   _pauseButton: {fileID: 979030375}
 --- !u!1 &453951147
@@ -394,6 +395,7 @@ MonoBehaviour:
   _continueButton: {fileID: 1948796128}
   _restartButton: {fileID: 282258031}
   _quitButton: {fileID: 1361272218}
+  _title: {fileID: 1176658261}
 --- !u!224 &523493241 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8838129009695898109, guid: 1322d0da7ecba9145b22075b4e499f33, type: 3}
@@ -445,6 +447,8 @@ MonoBehaviour:
   _winConditions: {fileID: 11400000, guid: d8dd96d6a705e7343ad80fd32d35e699, type: 2}
   _loseConditions: {fileID: 11400000, guid: 966407481f8c5924a8a711dfbe887e42, type: 2}
   _onPause: {fileID: 11400000, guid: 5d0ec2da11bf045469feca3379b6841e, type: 2}
+  _onLevelPopulated: {fileID: 11400000, guid: 7fde04d507532b442846977a4f000673, type: 2}
+  _onGameOver: {fileID: 11400000, guid: b26d28b51996ff641b4104a69fac42b9, type: 2}
 --- !u!1 &661987641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1935,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 34f1949cb20d48c40ad5c69b2fb34e48, type: 2}
   - {fileID: 11400000, guid: f6aa35c3f1217a545bcf9f231e90b607, type: 2}
   - {fileID: 11400000, guid: d5540e1e57fe3174e8bdc4d8022d284d, type: 2}
+  _onLevelPopulated: {fileID: 11400000, guid: 7fde04d507532b442846977a4f000673, type: 2}
 --- !u!4 &1701199914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2757299167874312114, guid: c295914c991bfb24f80839787e0a2f83, type: 3}

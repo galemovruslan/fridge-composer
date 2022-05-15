@@ -9,14 +9,12 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
     [SerializeField] private ConditionSet _loseConditions;
     [SerializeField] private BoolGameEvent _onPause;
     [SerializeField] private BoolGameEvent _onLevelPopulated;
+    [SerializeField] private BoolGameEvent _onGameOver;
     private void OnEnable()
     {
         _winConditions.AddListener(HandleWin);
-        _winConditions.StartConditions();
-
         _loseConditions.AddListener(HanldeLose);
-        _loseConditions.StartConditions();
-
+        _onLevelPopulated.AddListener(HandleLevelPopulated);
         _onPause.AddListener(HandePause);
     }
 
@@ -24,11 +22,11 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
     {
         _winConditions.RemoveListener(HandleWin);
         _loseConditions.RemoveListener(HanldeLose);
+        _onLevelPopulated.RemoveListener(HandleLevelPopulated);
         _onPause.RemoveListener(HandePause);
     }
 
     private void Update()
-
     {
         _winConditions.Tick(Time.deltaTime);
         _loseConditions.Tick(Time.deltaTime);
@@ -44,6 +42,7 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
         Debug.Log("Win");
         _winConditions.PauseConditions(true);
         _loseConditions.PauseConditions(true);
+        _onGameOver.Raise(true);
     }
 
     private void HanldeLose()
@@ -51,6 +50,7 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
         Debug.Log("Lose");
         _winConditions.PauseConditions(true);
         _loseConditions.PauseConditions(true);
+        _onGameOver.Raise(false);
     }
 
     private void HandePause(bool isPaused)
@@ -61,6 +61,7 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
 
     private void HandleLevelPopulated(bool isPopulated)
     {
-
+        _winConditions.StartConditions();
+        _loseConditions.StartConditions();
     }
 }

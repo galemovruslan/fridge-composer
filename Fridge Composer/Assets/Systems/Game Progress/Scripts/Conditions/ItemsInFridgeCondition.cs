@@ -8,26 +8,31 @@ public class ItemsInFridgeCondition : Condition
     [SerializeField] private ItemGameEvent OnRemoveItem;
 
     private FillProgress _progress;
+    private bool _checking;
 
     private void OnEnable()
     {
         _progress = new FillProgress();
+        _checking = false;
 
-        OnCreateItem.AddListener(_progress.HandleItemSpawn);
-        OnPlaceItem.AddListener(_progress.HandlePlaceItem);
-        OnRemoveItem.AddListener(_progress.HandleRemoveItem);
+        OnCreateItem.AddListener(HandleItemSpawn);
+        OnPlaceItem.AddListener(HandlePlaceItem);
+        OnRemoveItem.AddListener(HandleRemoveItem);
         _progress.AddListener(SatisfyCondition);
     }
 
     private void OnDisable()
     {
-        OnCreateItem.RemoveListener(_progress.HandleItemSpawn);
-        OnPlaceItem.RemoveListener(_progress.HandlePlaceItem);
-        OnRemoveItem.RemoveListener(_progress.HandleRemoveItem);
+        OnCreateItem.RemoveListener(HandleItemSpawn);
+        OnPlaceItem.RemoveListener(HandlePlaceItem);
+        OnRemoveItem.RemoveListener(HandleRemoveItem);
         _progress.RemoveListener(SatisfyCondition);
     }
 
-    public override void StartChecking(){}
+    public override void StartChecking()
+    {
+        _checking = true;
+    }
 
     public override void PauseChecking(bool isPaused)
     {
@@ -41,5 +46,28 @@ public class ItemsInFridgeCondition : Condition
         ChangeStatus(this, ConditionStatus.satisfy);
     }
 
-    
+    private void HandleItemSpawn(Item item)
+    {
+        if (_checking)
+        {
+            _progress.HandleItemSpawn(item);
+        }
+    }
+
+    private void HandlePlaceItem(Item item)
+    {
+        if (_checking)
+        {
+            _progress.HandlePlaceItem(item);
+        }
+    }
+
+    private void HandleRemoveItem(Item item)
+    {
+        if (_checking)
+        {
+            _progress.HandleRemoveItem(item);
+        }
+    }
+
 }
