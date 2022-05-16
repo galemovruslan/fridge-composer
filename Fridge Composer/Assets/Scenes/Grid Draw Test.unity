@@ -1921,8 +1921,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b762cc9a1c10234dbfc4215e1a46f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fillRatio: 0.95
-  _leaveRatio: 0.5
+  _fillRatio: 0.1
+  _replaceRatio: 0.1
   _gridSet: {fileID: 11400000, guid: 86c6cebd866764d478d1a35c473f64ff, type: 2}
   _itemPool:
   - {fileID: 11400000, guid: 0832cbf6aef6f294d96cbe674a2ab92e, type: 2}
@@ -1936,6 +1936,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6aa35c3f1217a545bcf9f231e90b607, type: 2}
   - {fileID: 11400000, guid: d5540e1e57fe3174e8bdc4d8022d284d, type: 2}
   _onLevelPopulated: {fileID: 11400000, guid: 7fde04d507532b442846977a4f000673, type: 2}
+  _onCreateItem: {fileID: 11400000, guid: 49eb84e9189d4964fafb76a29c4b7a06, type: 2}
 --- !u!4 &1701199914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2757299167874312114, guid: c295914c991bfb24f80839787e0a2f83, type: 3}

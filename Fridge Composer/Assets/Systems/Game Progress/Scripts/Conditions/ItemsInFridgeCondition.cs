@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="New Items in FridgeCondition", menuName ="Conditions/Items in Fridge")]
+[CreateAssetMenu(fileName = "New Items in FridgeCondition", menuName = "Conditions/Items in Fridge")]
 public class ItemsInFridgeCondition : Condition
 {
     [SerializeField] private ItemGameEvent OnCreateItem;
@@ -31,7 +31,12 @@ public class ItemsInFridgeCondition : Condition
 
     public override void StartChecking()
     {
-        _checking = true;
+        _progress.Start();
+    }
+
+    public override void Reset()
+    {
+        _progress.Reset();
     }
 
     public override void PauseChecking(bool isPaused)
@@ -39,7 +44,7 @@ public class ItemsInFridgeCondition : Condition
         _progress.TogglePause(isPaused);
     }
 
-    public override void Tick(float deltaTime){}
+    public override void Tick(float deltaTime) { }
 
     private void SatisfyCondition()
     {
@@ -48,26 +53,17 @@ public class ItemsInFridgeCondition : Condition
 
     private void HandleItemSpawn(Item item)
     {
-        if (_checking)
-        {
-            _progress.HandleItemSpawn(item);
-        }
+        _progress.HandleItemSpawn(item);
     }
 
     private void HandlePlaceItem(Item item)
     {
-        if (_checking)
-        {
-            _progress.HandlePlaceItem(item);
-        }
+        _progress.HandlePlaceItem(item);
     }
 
     private void HandleRemoveItem(Item item)
     {
-        if (_checking)
-        {
-            _progress.HandleRemoveItem(item);
-        }
+        _progress.HandleRemoveItem(item);
     }
 
 }

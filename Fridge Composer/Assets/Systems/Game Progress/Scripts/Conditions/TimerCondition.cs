@@ -28,6 +28,7 @@ public class TimerCondition : Condition
     public override void StartChecking()
     {
         _progress.Start(_presetValue);
+        Debug.Log("Start timer");
     }
 
     public override void PauseChecking(bool isPaused)

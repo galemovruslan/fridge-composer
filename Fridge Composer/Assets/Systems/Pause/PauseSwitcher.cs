@@ -14,7 +14,7 @@ public class PauseSwitcher : MonoBehaviour
 
     private void Awake()
     {
-        _pauseMenu.Hide();
+        ResetPause();
     }
 
     private void OnEnable()

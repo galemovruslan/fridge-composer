@@ -32,6 +32,11 @@ public class ConditionSet : ScriptableObject
         _conditions.ForEach((condition) => { condition.PauseChecking(isPaused); });
     }
 
+    public void ResetConditions()
+    {
+        _conditions.ForEach((condition) => { condition.Reset(); });
+    }
+
     public void Tick(float deltaTime)
     {
         _conditions.ForEach((condition) => { condition.Tick(deltaTime); });

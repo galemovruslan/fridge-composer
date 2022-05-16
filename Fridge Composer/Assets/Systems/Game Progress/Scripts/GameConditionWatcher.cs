@@ -10,12 +10,15 @@ public class GameConditionWatcher : MonoBehaviour, IPauseable
     [SerializeField] private BoolGameEvent _onPause;
     [SerializeField] private BoolGameEvent _onLevelPopulated;
     [SerializeField] private BoolGameEvent _onGameOver;
+
     private void OnEnable()
     {
         _winConditions.AddListener(HandleWin);
         _loseConditions.AddListener(HanldeLose);
         _onLevelPopulated.AddListener(HandleLevelPopulated);
         _onPause.AddListener(HandePause);
+        _winConditions.ResetConditions();
+        _loseConditions.ResetConditions();
     }
 
     private void OnDisable()

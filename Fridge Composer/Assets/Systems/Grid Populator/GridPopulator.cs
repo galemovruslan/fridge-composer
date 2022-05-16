@@ -8,7 +8,6 @@ public class GridPopulator : MonoBehaviour
 {
     public bool InFridge => _grid.InFridge;
 
-    [SerializeField] private ItemGameEvent _onCreateItem;
     [SerializeField] private GridInteractor _grid;
     [SerializeField] private ItemSpawner _spawner;
 
@@ -23,7 +22,6 @@ public class GridPopulator : MonoBehaviour
     public List<PlaceableItem> PopulateGrid(List<ItemDesciption> itemDesciptions, float fillRatio) // TODO заменить аргумент на коллекцию ItemDescription
     {
         _placedItems = _populator.PopulateGrid(itemDesciptions, fillRatio);
-        _placedItems.ForEach(item => _onCreateItem.Raise(item.Item));
         return _placedItems;
     }
 

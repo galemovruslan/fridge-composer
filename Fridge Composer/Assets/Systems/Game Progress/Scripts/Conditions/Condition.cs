@@ -7,9 +7,11 @@ public abstract class Condition : ScriptableObject
     private event Action<Condition, ConditionStatus> _onStatusChange;
 
     public abstract void StartChecking();
-    public virtual void PauseChecking(bool isPaused) { }
 
     public abstract void Tick(float deltaTime);
+    public virtual void PauseChecking(bool isPaused) { }
+
+    public virtual void Reset() { }
 
     public void Subscribe(Action<Condition, ConditionStatus> action)
     {

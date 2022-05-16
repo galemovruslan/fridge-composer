@@ -22,6 +22,7 @@ public class TimerProgress
     {
         _timerValue = presetValue;
         _presetValue = 0f;
+        _isPaused = false;
     }
 
     public void TogglePause(bool isPaused)

@@ -8,10 +8,11 @@ public class LevelPopulator : MonoBehaviour
     private const string _spawnParentName = "Items";
 
     [SerializeField] private float _fillRatio = 0.95f;
-    [SerializeField] private float _leaveRatio = 0.5f;
+    [SerializeField] private float _replaceRatio = 0.5f;
     [SerializeField] private GameObjectRuntimeSet _gridSet;
     [SerializeField] private List<ItemDesciption> _itemPool;
     [SerializeField] private BoolGameEvent _onLevelPopulated;
+    [SerializeField] private ItemGameEvent _onCreateItem;
 
     private Transform _spawnParent;
     private List<GridPopulator> _fridgePopulators = new List<GridPopulator>();
@@ -45,7 +46,7 @@ public class LevelPopulator : MonoBehaviour
     private void FillOutSurfaces()
     {
         ItemReplacer replacer = new ItemReplacer();
-        replacer.Replace(_outerGrids, _spawnedItems, 0.25f);
+        replacer.Replace(_outerGrids, _spawnedItems, _replaceRatio);
     }
 
     private void FillFridge()
@@ -54,6 +55,7 @@ public class LevelPopulator : MonoBehaviour
         {
             _spawnedItems.AddRange(populator.PopulateGrid(_itemPool, _fillRatio));
         }
+        _spawnedItems.ForEach(item => _onCreateItem.Raise(item.Item));
     }
 
     private void UnpackPopulators()
