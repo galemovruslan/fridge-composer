@@ -46,8 +46,15 @@ public class GridInteractor : MonoBehaviour
     {
         Vector3 localCoordinates = ConvertToLocal(worldCoordinates);
         Item itemOnCoordinates = _grid.GetContent(localCoordinates);
+        return RemoveFromGrid(itemOnCoordinates);
+    }
 
-        if (itemOnCoordinates == null)
+    public PlaceableItem RemoveFromGrid(Item itemOnCoordinates)
+    {
+        if (
+            itemOnCoordinates == null ||
+            !_gameObjectMap.ContainsKey(itemOnCoordinates)
+            )
         {
             return null;
         }

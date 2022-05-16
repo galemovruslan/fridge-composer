@@ -18,7 +18,8 @@ public class LevelPopulator : MonoBehaviour
     private List<GridPopulator> _fridgePopulators = new List<GridPopulator>();
     private List<PlaceableItem> _spawnedItems = new List<PlaceableItem>();
     private List<GridInteractor> _outerGrids = new List<GridInteractor>();
-
+    private List<GridInteractor> _innerGrids = new List<GridInteractor>();
+    
     private void Awake()
     {
         var parentGameObject = GameObject.Find(_spawnParentName);
@@ -46,7 +47,7 @@ public class LevelPopulator : MonoBehaviour
     private void FillOutSurfaces()
     {
         ItemReplacer replacer = new ItemReplacer();
-        replacer.Replace(_outerGrids, _spawnedItems, _replaceRatio);
+        replacer.Replace(_innerGrids, _outerGrids, _spawnedItems, _replaceRatio);
     }
 
     private void FillFridge()
@@ -69,6 +70,7 @@ public class LevelPopulator : MonoBehaviour
                 if (populator.InFridge)
                 {
                     _fridgePopulators.Add(populator);
+                    _innerGrids.Add(gridObject.GetComponent<GridInteractor>());
                 }
                 else
                 {
@@ -76,14 +78,6 @@ public class LevelPopulator : MonoBehaviour
                 }
             }
         }
-
-        /*
-         * 1) определить какие предметы и в каком количестве использовать для заполнения
-         *  холодильника на указанный процент
-         * 2) расставить предметы на случайные поверхности
-         */
-
-
-
     }
+
 }

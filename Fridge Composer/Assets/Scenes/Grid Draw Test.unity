@@ -1922,7 +1922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fillRatio: 0.1
-  _replaceRatio: 0.1
+  _replaceRatio: 0.5
   _gridSet: {fileID: 11400000, guid: 86c6cebd866764d478d1a35c473f64ff, type: 2}
   _itemPool:
   - {fileID: 11400000, guid: 0832cbf6aef6f294d96cbe674a2ab92e, type: 2}

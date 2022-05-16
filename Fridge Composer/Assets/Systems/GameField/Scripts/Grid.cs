@@ -143,6 +143,11 @@ public class Grid
 
     public void ClearContentWithItem(Item item)
     {
+        if (!_gridIndicesMap.ContainsKey(item))
+        {
+            return;
+        }
+
         List<Vector2Int> ocupiedGridIndices = _gridIndicesMap[item];
         foreach (var itemIndices in ocupiedGridIndices)
         {
