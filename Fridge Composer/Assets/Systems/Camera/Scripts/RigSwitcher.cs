@@ -8,24 +8,23 @@ public class RigSwitcher : MonoBehaviour
 {
     [SerializeField] private GameObjectRuntimeSet _rigRepository;
 
-    private List<CameraRig> _sceneRigs = new List<CameraRig>();
+    private List<GridFocuser> _sceneFocusers = new List<GridFocuser>();
 
     private void Start()
     {
-        _sceneRigs.AddRange(_rigRepository.GetObjects().Select(obj => obj.GetComponent<CameraRig>()));
-        _sceneRigs.ForEach((rig) => rig.OnSelect += OnSwitch);
+        _sceneFocusers.AddRange(_rigRepository.GetObjects().Select(obj => obj.GetComponent<GridFocuser>()));
+        _sceneFocusers.ForEach((rig) => rig.OnSelect += OnSwitch);
     }
 
     private void OnDisable()
     {
-        _sceneRigs.ForEach((rig) => rig.OnSelect -= OnSwitch);
-
+        _sceneFocusers.ForEach((rig) => rig.OnSelect -= OnSwitch);
     }
 
-    private void OnSwitch(CameraRig activeRig)
+    private void OnSwitch(GridFocuser activeFocuser)
     {
-        _sceneRigs.ForEach((rig) => rig.ResetPriority());
-        activeRig.SetPriority();
+        _sceneFocusers.ForEach((rig) => rig.ResetFocus());
+        activeFocuser.SetFocus();
     }
 
 }

@@ -10,7 +10,6 @@ public class GridFocuser : MonoBehaviour
     public event Action<GridFocuser> OnSelect;
     public bool InFridge => _gridInteractor.InFridge;
 
-
     [SerializeField] private CameraRig _cameraRig;
     [SerializeField] private GridInteractor _gridInteractor;
 
@@ -32,11 +31,21 @@ public class GridFocuser : MonoBehaviour
     public void SetFocus()
     {
         SetPriority();
+        if (_gridInteractor == null)
+        {
+            return;
+        }
+        _gridInteractor.SetColliderEnable(true);
     }
 
     public void ResetFocus()
     {
         ResetPriority();
+        if (_gridInteractor == null)
+        {
+            return;
+        }
+        _gridInteractor.SetColliderEnable(false);
     }
 
     private void ResetPriority()
