@@ -141,6 +141,11 @@ public class GridInteractor : MonoBehaviour
         return _grid.GetOcupiedGridIndices(startIndex, item);
     }
 
+    public void SetColliderEnable(bool isEnable)
+    {
+        _collider.enabled = isEnable;
+    }
+
     private void RegisterObjectOnGrid(Item item, PlaceableItem spawnedGameObject)
     {
         _gameObjectMap.Add(item, spawnedGameObject);
