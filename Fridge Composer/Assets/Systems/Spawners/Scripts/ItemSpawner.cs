@@ -24,7 +24,7 @@ public class ItemSpawner : ScriptableObject
     {
         if (!_spawnMap.ContainsKey(desciption))
         {
-            throw new System.Exception("Unnown item decription");
+            throw new System.Exception("Unknown item decription");
         }
 
         PlaceableItem newItem = Instantiate(_spawnMap[desciption]);

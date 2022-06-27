@@ -42,7 +42,8 @@ public class Cell
 
     public bool CanPlaceHere(Item content)
     {
-        return (_content.Count == 0 || _content.Peek().isStackable && !content.isStackable) 
-            && !content.CheckForbidenAttributes(_surfaceDescrption);
+        bool isOccupied = (_content.Count == 0 || _content.Peek().isStackable && !content.isStackable);
+        bool hasForbidenAttributes = !content.CheckForbidenAttributes(_surfaceDescrption);
+        return isOccupied && hasForbidenAttributes;
     }
 }

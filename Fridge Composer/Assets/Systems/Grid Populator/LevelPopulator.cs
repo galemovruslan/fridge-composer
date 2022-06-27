@@ -39,12 +39,12 @@ public class LevelPopulator : MonoBehaviour
     {
         UnpackPopulators();
         FillFridge();
-        FillOutSurfaces();
+        MoveFromFridge();
 
         _onLevelPopulated.Raise(true);
     }
 
-    private void FillOutSurfaces()
+    private void MoveFromFridge()
     {
         ItemReplacer replacer = new ItemReplacer();
         replacer.Replace(_innerGrids, _outerGrids, _spawnedItems, _replaceRatio);

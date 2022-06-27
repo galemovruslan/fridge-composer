@@ -168,26 +168,37 @@ public class ItemComposer
 
     private ItemLocationPair GetNextItem()
     {
-        List<Vector2Int> posiblePlaces;
+        List<Vector2Int> posibleAnchorPlaces;
+        List<Vector2Int> availableUnocupiedPlaces;
         Item candidate;
         do
         {
             // выбираем случайной предмет из общего списка
             candidate = PullCandidate();
             // определяем все точки куда потенциально может встать предмет
-            posiblePlaces = _placeFinder.GetAvailablePlaceIndices(candidate);
-
-            if (posiblePlaces.Count == 0)
+            posibleAnchorPlaces = _placeFinder.GetAvailablePlaceIndices(candidate);
+            if (posibleAnchorPlaces.Count == 0)
             {
                 _bannedItems.Add(candidate);
             }
+            // проверка пересечения с возможных ячеек с уже занятыми 
+            Dictionary<Vector2Int, List<Vector2Int>> allPosibleOcupations = _placeFinder.GetPosibleOcupations(candidate, posibleAnchorPlaces);
+            availableUnocupiedPlaces = new List<Vector2Int>();
+            foreach (var anchorOcupied in allPosibleOcupations)
+            {
+                if (OverlapTest(anchorOcupied.Value))
+                {
+                    continue;
+                }
+                availableUnocupiedPlaces.Add(anchorOcupied.Key);
+            }
         }
-        while (posiblePlaces.Count == 0);
+        while (availableUnocupiedPlaces.Count == 0);
 
         ItemLocationPair nextItem = new ItemLocationPair()
         {
             item = candidate,
-            locations = posiblePlaces
+            locations = availableUnocupiedPlaces
         };
 
         return nextItem;

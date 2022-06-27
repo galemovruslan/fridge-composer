@@ -39,7 +39,13 @@ public class IterativePopulator : IGridPopulator
                 spawnedItem.SwapOrientation();
             }
 
-            _grid.TryPlaceOnGrid(spawnDescription.Location, spawnedItem);
+            if(!_grid.TryPlaceOnGrid(spawnDescription.Location, spawnedItem))
+            {
+                Debug.Log("Cannot place items");
+                GameObject.Destroy(spawnedItem.gameObject);
+                continue;
+            }
+
             placedItems.Add(spawnedItem);
         }
 
