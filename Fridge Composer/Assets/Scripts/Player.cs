@@ -6,12 +6,10 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private List<ItemAttribute> _attributes;
 
+#if UNITY_EDITOR
     private void Awake()
     {
         var guids = UnityEditor.AssetDatabase.FindAssets("t:"+typeof(ItemAttribute).Name);
-
-
-        
 
         foreach (var id in guids)
         {
@@ -21,4 +19,5 @@ public class Player : MonoBehaviour
             Debug.Log(assetObj.name);
         }
     }
+#endif
 }
